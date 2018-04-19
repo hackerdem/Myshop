@@ -26,7 +26,7 @@ SECRET_KEY = 'w)k7*5u5=+h#atdaibc)vmszwb$y!ggavd$50o6+kf3!h3xcc8'
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
+SESSION_EXPIRE_AT_BROWSER_CLOSE=True
 
 # Application definition
 
