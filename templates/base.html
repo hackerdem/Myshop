@@ -64,12 +64,29 @@
                       <span></span>
                     </a>
                   </li>
+        
                   <li class="account-icon">
                     <a href="#">
                       <span></span>
                     </a>
                     <div class="header-link-dropdown account-link-dropdown">
                       <ul class="link-dropdown-list">
+                        {% if request.user.is_authenticated %}
+                        <li>
+                            <span class="dropdown-title">
+                              Hello {{ request.user.first_name }},
+                            </span>
+                            <ul>
+                                <li>
+                                    <a href="account/logout/">Dashboard</a>
+                                  </li>
+                              <li>
+                                <a href="account/logout/">Logout</a>
+                              </li>
+                            
+                            </ul>
+                          </li>
+                        {% else %}
                         <li>
                           <span class="dropdown-title">
                             Welcome Message!
@@ -83,6 +100,7 @@
                             </li>
                           </ul>
                         </li>
+                        {% endif %}
                         <li>
                           <span class="dropdown-title">
                             Language :
@@ -133,36 +151,17 @@
                 <div id="menu" class="navbar-collapse collapse">
                   <ul class="nav navbar-nav">
                     <li class="level">
-                      <a href="index.html">Home</a>
+                      <a href="/">Home</a>
                     </li>
-                    <li class="level dropdown">
-                      <span class="opener plus"></span>
-                      <a href="shop.html" class="page-scroll">
-                        Woman
-                      </a>
-                      <!-- MEGA MENU START-->
-                      <div class="megamenu mobile-sub-menu">
-                        <!-- MEGA MENU TOP START-->
-                        
-                        <!-- MEGA MENU TOP END-->
-                        <!-- MEGA MENU BOTTOM END-->
-                        <div class="megamenu-inner-bottom mt-20 visible-lg visible-md">
-                          <a href="shop.html">
-                            <img src="static/images/alib1A-1920x506.jpg" alt="Empire">
-                          </a>
-                        </div> 
-                        <!-- MEGA MENU BOTTOM END-->
-                      </div>
-                      <!-- MEGA MENU END-->
-                    </li>
+                    
                     <li class="level">
                       <a href="shop.html" class="page-scroll">
-                        Man
+                        Collections
                       </a>
                     </li>
                     <li class="level dropdown">
                       <span class="opener plus"></span>
-                      <a href="#">Blog</a>
+                      <a href="#">Contact</a>
                       <div class="megamenu mobile-sub-menu">
                         <div class="megamenu-inner-top">
                           <ul class="sub-menu-level1">
@@ -177,11 +176,11 @@
                       </div>
                     </li>
                     <li class="level">
-                      <a href="cart.html">Cart</a>
+                      <a href="cart.html">Artists</a>
                     </li>
                     <li class="level dropdown">
                       <span class="opener plus"></span>
-                      <a href="#">Pages</a>
+                      <a href="#">About Us</a>
                       <div class="megamenu mobile-sub-menu">
                         <div class="megamenu-inner-top">
                           <ul class="sub-menu-level1">

@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<section class="checkout-section ptb-95">
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="row">
+            <div class="col-lg-6 col-md-8 col-sm-8 col-lg-offset-3 col-sm-offset-2">
+              <form action='.' method="post" class="main-form full">
+                                    
+                    {% csrf_token %}
+                <div class="row">
+                  <div class="col-xs-12 mb-20">
+                    <div class="heading-part heading-bg">
+                      <h2 class="heading align-center">Customer Registration</h2>
+                    </div>
+                  </div>
+                  <div class="col-xs-12">
+                    {{user_form.as_p}}
+                  </div>
+                  
+          
+                  <div class="col-xs-12">
+                    <div class="check-box left-side"> 
+                      
+                    </div>
+                    <button name="submit" type="submit" class="btn-color right-side">Sign Up</button>
+                  </div>
+                  
+                 
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}

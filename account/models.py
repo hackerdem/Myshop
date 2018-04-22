@@ -2,7 +2,7 @@ from django.db import models
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext as _
-class Users(models.Model):
+class Profile(models.Model):
     username=models.EmailField(_('Email address'),max_length=64,blank=False)
     name=models.TextField(_('name'),max_length=64,blank=False)
     surname=models.TextField(_('Family name'),max_length=128,blank=False)
@@ -13,7 +13,7 @@ class Users(models.Model):
     city=models.CharField(_("city"),max_length=64,blank=True)
     zip_code=models.CharField(_("zip code"),max_length=4,default="3123")
     phone=models.TextField()
-
+    
     class Meta:
         ordering=('-created',)
 

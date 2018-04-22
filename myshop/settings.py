@@ -37,12 +37,23 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'social.apps.django_app.default',
     'account',
     'shop',
     'cart',
   
 )
-
+AUTHENTICATION_BACKENDS=(
+    'django.contrib.auth.backends.ModelBackend',
+    'social_core.backends.facebook.FacebookOAuth2',
+   
+    'social.backends.twitter.TwitterOAuth',
+    'social.backends.google.GoogleOAuth2',
+    
+)
+SOCIAL_AUTH_FACEBOOK_KEY = '1635810729820940' # Facebook App ID
+SOCIAL_AUTH_FACEBOOK_SECRET = '2bc836cbc220c6149966baceda317f5d' # Facebook App Secret
+SOCIAL_AUTH_FACEBOOK_SCOPE = ['email','public_profile']
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
