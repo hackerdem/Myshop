@@ -4,7 +4,6 @@ from django.contrib.auth import authenticate,login,logout
 from .forms import LoginForm,UserRegistrationForm
 from django.contrib.auth.models import User
 from .models import Profile
-from shop.views import product_list
 from django.shortcuts import redirect
 from django.core.mail import EmailMessage
 from django.contrib.sites.shortcuts import get_current_site

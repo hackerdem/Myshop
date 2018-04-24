@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-import django.contrib.auth.password_validation as validators
+
 class LoginForm(forms.Form):
     username=forms.CharField()
     password=forms.CharField(widget=forms.PasswordInput)
@@ -12,11 +12,13 @@ class UserRegistrationForm(forms.ModelForm):
     class Meta:
         model=User
         fields=('username','email','first_name')
+  
     def clean_password2(self):
         cd=self.cleaned_data
-        if validators.validate_password(cd['password'])!=None:
-      
-            raise forms.ValidationError('Not a secure password')
+        password=cd['password']
         if cd['password']!=cd['password2']:
             raise forms.ValidationError('Passwords don\'t match.')
+        if len(password)<=7 or password.islower() or password.isdigit() or password.isupper():
+            raise forms.ValidationError('Password should be at least 8 characters and consist of numbers,upper and lower case characters.')
         return cd['password2']
+
