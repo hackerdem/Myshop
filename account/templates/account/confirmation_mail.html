@@ -1,0 +1,10 @@
+
+{% block title %}Reset your password{% endblock %}
+{% block content %}
+{% autoescape off %}
+Hi {{ user.username }},
+Please click on the link to confirm your registration,
+http://{{ 127.0.0.1 }}{% url 'account/activate/' uidb64=uid token=token %}
+{% endautoescape %}
+
+{% endblock %}

@@ -1,0 +1,4 @@
+Someone has created an account using {{ email }} email address. If you have created this account plaese
+Follow the link below for account confirmation:
+{{ protocol }}://{{ domain }}{% url "register_confirm" idb64=uid token=token %}
+Your username, in case you've forgotten: {{ user.get_username }}
