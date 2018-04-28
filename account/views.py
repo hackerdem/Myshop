@@ -8,9 +8,11 @@ from django.shortcuts import redirect
 from django.core.mail import EmailMessage
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.encoding import force_bytes, force_text
-from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.utils.http import urlsafe_base64_encode,urlsafe_base64_decode
 from django.template.loader import render_to_string
 from .tokens import account_activation_token
+from django.contrib.auth.tokens import default_token_generator
+from datetime import datetime
 
 def user_login(request):
     if request.method=='POST':
@@ -38,10 +40,11 @@ def user_register(request):
             new_user=user_form.save(commit=False)
             new_user.set_password(user_form.cleaned_data['password'])
             new_user.is_active=False
-            uid=urlsafe_base64_encode(force_bytes(new_user.pk))
-            token=account_activation_token.make_token(new_user)
+            uid=urlsafe_base64_encode(force_bytes(new_user.pk)).decode()
+            token=default_token_generator.make_token(new_user)
             current_site = get_current_site(request)
-            mail_subject = 'Activate your blog account.'
+            mail_subject = 'Activate your artsshop account.'
+            print(uid,token)
             message = render_to_string('account/confirmation_mail.html', {
                 'user': new_user,
                 'domain': current_site.domain,
@@ -61,18 +64,27 @@ def user_register(request):
 
 def user_logout(request):
     logout(request)
-    return HttpResponse(product_list(request))
+    return HttpResponse(product_list(request)) #Fix this later
 
 def activate(request, uidb64, token):
+    
     try:
+        uidb64='Tm9uZQ'
+        print(uidb64)
+        print(urlsafe_base64_decode(uidb64))
         uid = force_text(urlsafe_base64_decode(uidb64))
+        print(uid)
         user = User.objects.get(pk=uid)
+        print(user.id)
+        user.last_login = datetime.now()
+        user.save(update_fields=['last_login'])
     except(TypeError, ValueError, OverflowError, User.DoesNotExist):
         user = None
-    if user is not None and account_activation_token.check_token(user, token):
+    print(user.last_login,default_token_generator.check_token(user, token))
+    if user is not None and default_token_generator.check_token(user, token):
         user.is_active = True
         user.save()
-        login(request, user)
+        login(request, user)# delete this later
         # return redirect('home')
         return HttpResponse('Thank you for your email confirmation. Now you can login your account.')
     else:

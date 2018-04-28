@@ -12,7 +12,7 @@ def cart_add(request,product_id):
     if form.is_valid():
         cd=form.cleaned_data
         cart.add(product=product,
-                 quantity=cd['quantity'],
+                 quantity=1,# fix this later this should be defined in the model as default instead of writing here
                  update_quantity=cd['update'])
     return redirect('cart:cart_detail')
 

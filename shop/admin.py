@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Category,Product
+from .models import Category,Product,Image
 
 class CategoryAdmin(admin.ModelAdmin):
     list_display=['name','slug']
@@ -14,3 +14,8 @@ class ProductAdmin(admin.ModelAdmin):
     list_editable=['price','stock','available','number_of_click']
     prepopulated_fileds={'slug':('name',)}
 admin.site.register(Product,ProductAdmin)
+
+class ImageAdmin(admin.ModelAdmin):
+    list_display=['img_product_id','image']
+    
+admin.site.register(Image,ImageAdmin)
