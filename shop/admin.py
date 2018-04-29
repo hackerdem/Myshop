@@ -1,5 +1,6 @@
 from django.contrib import admin
-from .models import Category,Product,Image
+from .models import Category,Product
+from account.models import UserActivation
 
 class CategoryAdmin(admin.ModelAdmin):
     list_display=['name','slug']
@@ -15,7 +16,10 @@ class ProductAdmin(admin.ModelAdmin):
     prepopulated_fileds={'slug':('name',)}
 admin.site.register(Product,ProductAdmin)
 
-class ImageAdmin(admin.ModelAdmin):
-    list_display=['img_product_id','image']
+
     
-admin.site.register(Image,ImageAdmin)
+
+class UserActivationAdmin(admin.ModelAdmin):
+    list_display=['user','access_token']
+    
+admin.site.register(UserActivation,UserActivationAdmin)

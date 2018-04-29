@@ -41,12 +41,11 @@ class Product(models.Model):
         return reverse('shop:product_detail',args=[self.id,self.slug])
 
 def get_image_filename(instance,filename):
-    image_title=instance.products.name
-    slug=slugify(image_title)
-    return "products/{}-/{}".format(slug,filename)
-class Image(models.Model):
+    return "hi"
+"""class Image(models.Model):
     img_product_id=models.ForeignKey(Product,related_name="img_product_id",on_delete=models.CASCADE)
-    image=models.ImageField(upload_to=get_image_filename,
+    slug=slugify(img_product_id.name)
+    image=models.ImageField(upload_to='products/slug',
                             verbose_name='Image',)
     def __str__(self):
-        return self.img_product_id
+        return self.img_product_id"""

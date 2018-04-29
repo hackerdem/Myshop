@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.contrib.auth import authenticate,login,logout
 from .forms import LoginForm,UserRegistrationForm
 from django.contrib.auth.models import User
-from .models import Profile
+from .models import Profile,UserActivation
 from django.shortcuts import redirect
 from django.core.mail import EmailMessage
 from django.contrib.sites.shortcuts import get_current_site
@@ -42,6 +42,7 @@ def user_register(request):
             new_user.is_active=False
             uid=urlsafe_base64_encode(force_bytes(new_user.pk)).decode()
             token=default_token_generator.make_token(new_user)
+             
             current_site = get_current_site(request)
             mail_subject = 'Activate your artsshop account.'
             print(uid,token)
@@ -57,6 +58,7 @@ def user_register(request):
             )
             email.send()
             new_user.save()
+            UserActivation.objects.create(user=new_user, access_token=token)
             return render(request,'account/register_done.html',{'new_user':new_user,'uid':uid,'token':token})
     else:
         user_form=UserRegistrationForm() 
@@ -69,19 +71,14 @@ def user_logout(request):
 def activate(request, uidb64, token):
     
     try:
-        uidb64='Tm9uZQ'
-        print(uidb64)
-        print(urlsafe_base64_decode(uidb64))
+        print("mmm",uidb64)
         uid = force_text(urlsafe_base64_decode(uidb64))
-        print(uid)
         user = User.objects.get(pk=uid)
-        print(user.id)
-        user.last_login = datetime.now()
-        user.save(update_fields=['last_login'])
+        print("mmm",uid,user,user.id)
     except(TypeError, ValueError, OverflowError, User.DoesNotExist):
         user = None
-    print(user.last_login,default_token_generator.check_token(user, token))
-    if user is not None and default_token_generator.check_token(user, token):
+    check_user= UserActivation.objects.get(user='erdemo')
+    if check_user and check_user.access_token==token:
         user.is_active = True
         user.save()
         login(request, user)# delete this later

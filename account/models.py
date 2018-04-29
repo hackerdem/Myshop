@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from django.utils.translation import ugettext as _
 from django.contrib.auth.backends import ModelBackend
 from django.contrib.auth import get_user_model
+from datetime import datetime
 class Profile(models.Model):
     username=models.EmailField(_('Email address'),max_length=64,blank=False)
     name=models.TextField(_('name'),max_length=64,blank=False)
@@ -23,3 +24,7 @@ class Profile(models.Model):
     def __str__(self):
         return self.username
 
+class UserActivation(models.Model):
+    user=models.ForeignKey(User)
+    access_token=models.CharField(max_length=100)
+    expire_date=models.DateTimeField(default=datetime.now())
