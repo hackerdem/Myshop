@@ -40,9 +40,10 @@ def user_register(request):
             new_user=user_form.save(commit=False)
             new_user.set_password(user_form.cleaned_data['password'])
             new_user.is_active=False
+            new_user.save()
+            print(new_user.pk,'ssdsdsd')
             uid=urlsafe_base64_encode(force_bytes(new_user.pk)).decode()
-            token=default_token_generator.make_token(new_user)
-             
+            token=account_activation_token.make_token(new_user)
             current_site = get_current_site(request)
             mail_subject = 'Activate your artsshop account.'
             print(uid,token)
@@ -57,8 +58,7 @@ def user_register(request):
                         mail_subject, message, to=[to_email]
             )
             email.send()
-            new_user.save()
-            UserActivation.objects.create(user=new_user, access_token=token)
+            
             return render(request,'account/register_done.html',{'new_user':new_user,'uid':uid,'token':token})
     else:
         user_form=UserRegistrationForm() 
@@ -77,12 +77,23 @@ def activate(request, uidb64, token):
         print("mmm",uid,user,user.id)
     except(TypeError, ValueError, OverflowError, User.DoesNotExist):
         user = None
-    check_user= UserActivation.objects.get(user='erdemo')
-    if check_user and check_user.access_token==token:
+    
+    
+    if user is not None and account_activation_token.check_token(user,token):
         user.is_active = True
         user.save()
-        login(request, user)# delete this later
+        # delete this later login(request, user)
         # return redirect('home')
         return HttpResponse('Thank you for your email confirmation. Now you can login your account.')
     else:
         return HttpResponse('Activation link is invalid!')
+
+    
+
+
+
+
+
+
+
+

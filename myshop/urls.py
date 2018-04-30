@@ -24,6 +24,7 @@ urlpatterns = [
     url(r'^shop/',include('shop.urls',namespace='shop')),
     url('social-auth/',include('social.apps.django_app.urls',namespace='social')),
     url(r'^',include('shop.urls',namespace='shop')),
+    url(r'^purchases/',include('purchases.urls',namespace='purchases')),
 ]
 if settings.DEBUG==True:
     urlpatterns+=static(settings.MEDIA_URL,

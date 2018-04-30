@@ -175,7 +175,7 @@
                         <div class="clearfix"></div>
                         <div class="mt-20"> 
                           <a href="{% url "cart:cart_detail" %}" class="btn-color btn">Cart</a> 
-                          <a href="checkout.html" class="btn-color btn right-side">Checkout</a> 
+                          <a href="{% url "purchases:purchase_create" %}" class="btn-color btn right-side">Checkout</a> 
                         </div>
                       
                       {% else %}
@@ -237,7 +237,7 @@
                               <ul class="sub-menu-level2 ">
                                 <li class="level3"><a href="about.html">About Us</a></li>
                                 <li class="level3"><a href="product-page.html">Product</a></li>
-                                <li class="level3"><a href="checkout.html">Checkout</a></li>
+                                <li class="level3"><a href="{% url "purchases:purchase_create" %}">Checkout</a></li>
                                 <li class="level3"><a href="contact.html">Contact</a></li>
                                 <li class="level3"><a href="404.html">404 Error</a></li>
                               </ul>

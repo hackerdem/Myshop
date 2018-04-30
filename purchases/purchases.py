@@ -1,10 +1,10 @@
 from django import forms
-from .models import Order
+from .models import Purchase
 from django.db import models
 
-class OrderCreateForm(forms.ModelForm):
+class PurchaseCreateForm(forms.ModelForm):
     class Meta:
-        model=Order
+        model=Purchase
         fields=['shipping_first_name','shipping_last_name',
                 'shipping_email','shipping_address',
                 'shipping_landmark','shipping_country',
@@ -15,5 +15,4 @@ class OrderCreateForm(forms.ModelForm):
                 'billing_state','billing_city','billing_postcode',
                 'use_shipping_for_billing',
 
-        ]
-
+        ] 
