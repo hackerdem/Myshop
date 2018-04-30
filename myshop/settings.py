@@ -56,6 +56,7 @@ AUTHENTICATION_BACKENDS=(
 SOCIAL_AUTH_FACEBOOK_KEY = '1635810729820940' # Facebook App ID
 SOCIAL_AUTH_FACEBOOK_SECRET = '2bc836cbc220c6149966baceda317f5d' # Facebook App Secret
 SOCIAL_AUTH_FACEBOOK_SCOPE = ['email','public_profile']
+LOGIN_REDIRECT_URL = 'https://artsshop.herokuapp.com/'
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
