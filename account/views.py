@@ -69,7 +69,7 @@ def user_register(request):
 
 def user_logout(request):
     logout(request)
-    return HttpResponse(product_list(request)) #Fix this later
+    return render(request,'account/logout.html') #Fix this later
 
 def activate(request, uidb64, token):
     
