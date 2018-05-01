@@ -60,6 +60,7 @@ SOCIAL_AUTH_TWITTER_SECRET = 'rV5aKpl571IfSBjHdnJMIxS9aEoi62aYbVKgfKyNgVTWJdiYbc
 SOCIAL_AUTH_FACEBOOK_KEY = '1635810729820940' # Facebook App ID
 SOCIAL_AUTH_FACEBOOK_SECRET = '2bc836cbc220c6149966baceda317f5d' # Facebook App Secret
 SOCIAL_AUTH_FACEBOOK_SCOPE = ['email','public_profile']
+SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE= ['email','public_profile']
 LOGIN_REDIRECT_URL = 'https://artsshop.herokuapp.com/'
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
