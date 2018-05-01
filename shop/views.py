@@ -4,6 +4,8 @@ from cart.forms import CartAddProductForm
 from django.http import HttpResponse
 from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
 from cart.cart import Cart
+from django.http import JsonResponse
+from django.views.decorators.http import require_POST
 
 def product_list(request):
     cart=Cart(request)
@@ -37,4 +39,12 @@ def product_detail(request,id,slug):
     product.save()
     cart_product_form=CartAddProductForm()
     return render(request,'shop/product/product_detail.html',{'product':product,'cart_product_form':cart_product_form})
-    
+"""@require_POST   
+def product_liked_by_user(request):
+    product_id=request.POST.get('id')
+    action=request.POST.get('action')
+    if product_id and action:
+        try:
+            product=Product.objects.get(id=product_id)
+            if action=='like':
+                product."""

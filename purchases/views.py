@@ -8,7 +8,8 @@ from django.contrib.auth.decorators import login_required
 @login_required
 def check_user_registration(request):
     if request.user.is_authenticated():
-        return render(request,'purchases/purchase/created.html')
+        form=PurchaseCreateForm
+        return render(request,'purchases/purchase/shippinginfo.html',{'form':form})
     else:
         return render(request,'account/account/login.html')
 

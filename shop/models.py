@@ -30,6 +30,7 @@ class Product(models.Model):
     created=models.DateTimeField(auto_now_add=True)
     updated=models.DateTimeField(auto_now=True)
     number_of_click=models.PositiveIntegerField(default=0)
+    #like_number=models.PositiveIntegerField(default=0)
     class Meta:
         ordering=('name',)
         index_together=(('id','slug'),)

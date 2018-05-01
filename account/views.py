@@ -23,9 +23,12 @@ def user_login(request):
             if user is not None:
                 if user.is_active:
                     login(request,user)
-                    return redirect('http://arts.com:8000/')
+                    return render(request,'account/dashboard.html')#### THERE IS A PROBLEM HERE FIX IT LATER####
                 else:
                     return HttpResponse('Disabled account')
+            else:
+                form=LoginForm()
+                return render(request,'account/login.html',{'form':form})
         else:
             return HttpResponse('Invalid login')
     else:
@@ -71,14 +74,10 @@ def user_logout(request):
 def activate(request, uidb64, token):
     
     try:
-        print("mmm",uidb64)
         uid = force_text(urlsafe_base64_decode(uidb64))
         user = User.objects.get(pk=uid)
-        print("mmm",uid,user,user.id)
     except(TypeError, ValueError, OverflowError, User.DoesNotExist):
         user = None
-    
-    
     if user is not None and account_activation_token.check_token(user,token):
         user.is_active = True
         user.save()

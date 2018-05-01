@@ -12,10 +12,10 @@
             <div class="heading-part align-center mb-30">
               <div id="tabs" class="category-bar ">
                 <ul class="tab-stap">
-                  <li><a href="{% url "shop:product_list" %}" onclick="return theFunction();" class="tab-step1 selected" title="step1">All</a></li>
-                  <li><a href="{user.get}" class="tab-step2" title="step2">Featured</a></li>
-                  <li><a href="{ 'shop/all/' }" class="tab-step2" title="step2">Most Viewed</a></li>
-                  <li><a href="{% url 'shop:product_latest' %}" class="tab-step2" title="step2">Latest</a></li>
+                  <li><a href="{% url "shop:product_list" %}" onclick="return theFunction(href);" class="tab-step1 selected" title="step1">All</a></li>
+                  <li><a href="{user.get}" onclick="return theFunction('all');" class="tab-step2" title="step2">Featured</a></li>
+                  <li><a href="{% url "shop:product_most_viewed" %}" onclick="return theFunction(href);" class="tab-step2" title="step2">Most Viewed</a></li>
+                  <li><a href="{% url 'shop:product_latest' %}" onclick="return theFunction(href);" class="tab-step2" title="step2">Latest</a></li>
                 </ul>
               </div>
             </div>

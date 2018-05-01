@@ -200,7 +200,7 @@
                 <div id="menu" class="navbar-collapse collapse">
                   <ul class="nav navbar-nav">
                     <li class="level">
-                      <a href="#">Home</a>
+                      <a href={% url "shop:product_list" %}>Home</a>
                     </li>
                     
                     <li class="level">
@@ -391,8 +391,8 @@
     <script src="{% static 'js/owl.carousel.min.js' %}"></script> 
     <script src="{% static 'js/custom.js' %}"></script>
     <script type="text/javascript">
-      function theFunction () {
-        window.location.href = "/shop/latest";
+      function theFunction (param) {
+        window.location.href =param;
       }
   </script>
     <!-- JS FILES END -->
