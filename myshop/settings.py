@@ -12,6 +12,10 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+from .settings_data import SECRET,FACEBOOK_KEY,FACEBOOK_SECRET, \
+            GOOGLE_KEY,GOOGLE_SECRET,TWITTER_KEY,TWITTER_SECRET, \
+            PAYPAL_EMAIL,EMAIL_USER,EMAIL_PORT_NUMBER,EMAIL_PASSWORD
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
@@ -19,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'w)k7*5u5=+h#atdaibc)vmszwb$y!ggavd$50o6+kf3!h3xcc8'
+SECRET_KEY =SECRET
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -42,6 +46,8 @@ INSTALLED_APPS = (
     'shop',
     'cart',
     'purchases',
+    'paypal.standard.ipn',
+    'payment',
 
   
 )
@@ -53,12 +59,12 @@ AUTHENTICATION_BACKENDS=(
     'social.backends.linkedin.LinkedinOAuth2',
     
 )
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '812558628471-aiuooq0uvmmd1o3lim4njjv5cratl0a9.apps.googleusercontent.com' # Google Consumer Key
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'lG8R_bvnETuyd9BeXubxrt7_' # Google Consumer Secret
-SOCIAL_AUTH_TWITTER_KEY = 'gCgvIuZD2T8feBahAWeW0FnLN' # Twitter Consumer Key
-SOCIAL_AUTH_TWITTER_SECRET = 'rV5aKpl571IfSBjHdnJMIxS9aEoi62aYbVKgfKyNgVTWJdiYbc' # Twitter Consumer Secret
-SOCIAL_AUTH_FACEBOOK_KEY = '1635810729820940' # Facebook App ID
-SOCIAL_AUTH_FACEBOOK_SECRET = '2bc836cbc220c6149966baceda317f5d' # Facebook App Secret
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = GOOGLE_KEY
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = GOOGLE_SECRET
+SOCIAL_AUTH_TWITTER_KEY = TWITTER_KEY
+SOCIAL_AUTH_TWITTER_SECRET = TWITTER_SECRET
+SOCIAL_AUTH_FACEBOOK_KEY = FACEBOOK_KEY
+SOCIAL_AUTH_FACEBOOK_SECRET = FACEBOOK_SECRET
 SOCIAL_AUTH_FACEBOOK_SCOPE = ['email','public_profile']
 SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE= ['email','public_profile']
 LOGIN_REDIRECT_URL = 'https://artsshop.herokuapp.com/'
@@ -139,8 +145,10 @@ CART_SESSION_ID='cart'
 
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'erdemaus@gmail.com'
-EMAIL_HOST_PASSWORD = '12B14E20d'
-EMAIL_PORT = 587
+EMAIL_HOST_USER = EMAIL_USER
+EMAIL_HOST_PASSWORD = EMAIL_PASSWORD
+EMAIL_PORT = EMAIL_PORT_NUMBER
 
 
+PAYPAL_RECEIVER_EMAIL=PAYPAL_EMAIL
+PAYPAL_TEST=True
