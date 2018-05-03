@@ -13,7 +13,7 @@ class Purchase(models.Model):
     shipping_postcode=models.CharField(max_length=50,blank=False,null=False)
     #billing
     billing_first_name=models.CharField(max_length=50,blank=False,null=False)
-    billing_lastname=models.CharField(max_length=50,blank=False,null=False)
+    billing_last_name=models.CharField(max_length=50,blank=False,null=False)
     billing_email=models.EmailField(blank=False)
     billing_address=models.CharField(max_length=250,blank=False,null=False)
     billing_landmark=models.CharField(max_length=250)
