@@ -1,25 +1,14 @@
 from django.db import models
 from django.core.urlresolvers import reverse
 from django.template.defaultfilters import slugify
-class Category(models.Model):
-    name=models.CharField(max_length=200,
-                          db_index=True)
-    slug=models.SlugField(max_length=200,
-                          db_index=True,
-                          unique=True)
-
-    class Meta:
-        ordering=('name',)
-        verbose_name='category'
-        verbose_name_plural='categories'
-    
-    def __str__(self):
-        return self.name
-
-    def get_absolute_url(self):
-        return reverse('shop:product_list_by_category',args=[self.slug])
+"""
+class User(AbstractUser):
+    class Meta(object):
+        unique_together = ('email',)"""
 class Product(models.Model):
-    #category=models.ForeignKey(Category,related_name='products')
+    size=models.ForeignKey(Size,default=1,related_name='products')
+    color=models.ForeignKey(Color,default=1,related_name='products')
+    room=models.ForeignKey(Room,default=1,related_name='products')
     name=models.CharField(max_length=200,db_index=True)
     slug=models.SlugField(max_length=200,db_index=True)
     image=models.ImageField(upload_to='products/%Y/%m/%d',blank=True)
@@ -50,3 +39,51 @@ def get_image_filename(instance,filename):
                             verbose_name='Image',)
     def __str__(self):
         return self.img_product_id"""
+
+class Size(models.Model):
+    name=models.CharField(max_length=200,
+                          db_index=True)
+    slug=models.SlugField(max_length=200,
+                          db_index=True,
+                          unique=True)
+
+    class Meta:
+        ordering=('name',)
+        verbose_name='size'
+        verbose_name_plural='sizes'
+    
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return reverse('shop:product_list_by_size',args=[self.slug])
+
+class Room(models.Model):
+    name=models.CharField(max_length=200,
+                          db_index=True)
+    slug=models.SlugField(max_length=200,
+                          db_index=True,
+                          unique=True)
+    class Meta:
+        ordering=('name',)
+        verbose_name='room'
+        verbose_name_plural='rooms'
+    def __str__(self):
+        return self.name
+    def get_absolute_url(self):
+        return reverse('shop:product_list_by_room',args=[self.slug])
+
+class Color(models.Model):
+    name=models.CharField(max_length=200,
+                          db_index=True)
+    slug=models.SlugField(max_length=200,
+                          db_index=True,
+                          unique=True)
+    class Meta:
+        ordering=('name',)
+        verbose_name='color'
+        verbose_name_plural='colors'
+    def __str__(self):
+        return self.name
+    def get_absolute_url(self):
+        return reverse('shop:product_list_by_color',args=[self.slug])
