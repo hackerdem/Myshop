@@ -1,5 +1,5 @@
 from django.shortcuts import render,get_object_or_404
-from .models import Product
+from .models import Product,Size,Color,Room
 from cart.forms import CartAddProductForm
 from django.http import HttpResponse
 from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
@@ -7,6 +7,14 @@ from cart.cart import Cart
 from django.http import JsonResponse
 from django.views.decorators.http import require_POST
 
+def size_color_room_filter(request,slug):
+    
+    products=Product.objects.order_by('-{}'.format(slug))
+    return pagination(request,products)
+def product_list_by_feature(request,name,slug):
+    cart=Cart(request)
+    products=Product.objects.filter(**{slug:name.capitalize()}).order_by('-stock')
+    return pagination(request,products)
 def product_list(request):
     cart=Cart(request)
     products=Product.objects.filter(available=True).order_by('-stock')
@@ -19,6 +27,10 @@ def product_latest(request):
     products=Product.objects.order_by('-created')
     return pagination(request,products)
 def pagination(request,products):
+    features=['Size','Color','Room']
+    colors=Color.objects.all()
+    sizes=Size.objects.all()
+    rooms=Room.objects.all()
     paginator=Paginator(products,8)
     page=request.GET.get('page')
     try:
@@ -28,7 +40,13 @@ def pagination(request,products):
     except EmptyPage: 
         products=paginator.page(paginator.num_pages)
     return render(request,'shop/product/list.html',
-                        {'products':products,'paginator':paginator})
+                        {'products':products,
+                        'paginator':paginator,
+                        'features':{
+                                    'color':colors,
+                                    'room':rooms,
+                                    'size':sizes,},
+                        })
 
     
 
