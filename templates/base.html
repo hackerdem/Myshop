@@ -24,7 +24,7 @@
    
       <!--<link rel="stylesheet" type="text/css" href="{% static "css/font-awesome.min.css" %}">-->
     <link rel="stylesheet" type="text/css" href="{% static "css/bootstrap.css" %}">
-	<link rel="stylesheet" type="text/css" href="{% static "css/font-awesome.min.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "css/font-awesome.min.css" %}">
     <!--<link rel="stylesheet" type="text/css" href="{% static "css/jquery-ui.css" %}">
     <link rel="stylesheet" type="text/css" href="{% static "css/owl.carousel.css" %}">
      <link rel="stylesheet" type="text/css" href="{% static "css/fotorama.css" %}">-->
@@ -205,7 +205,7 @@
                     
                     <li class="level dropdown">
                       <span class="opener plus"></span>
-                      <a href="shop.html" class="page-scroll">
+                      <a href={% url "shop:collection_shop_list" %} class="page-scroll">
                         Collections
                       </a>
                       <!-- MEGA MENU START-->

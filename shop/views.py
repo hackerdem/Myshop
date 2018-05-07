@@ -10,43 +10,71 @@ from django.views.decorators.http import require_POST
 def size_color_room_filter(request,slug):
     
     products=Product.objects.order_by('-{}'.format(slug))
-    return pagination(request,products)
+    products,paginator,features=pagination(request,products)
+    return render(request,'shop/product/list.html',
+                        {'products':products,
+                        'paginator':paginator,
+                        'features':features,
+                        })
 def product_list_by_feature(request,name,slug):
     cart=Cart(request)
     products=Product.objects.filter(**{slug:name.capitalize()}).order_by('-stock')
-    return pagination(request,products)
+    products,paginator,features=pagination(request,products)
+    return render(request,'shop/product/list.html',
+                        {'products':products,
+                        'paginator':paginator,
+                        'features':features,
+                        })
 def product_list(request):
     cart=Cart(request)
     products=Product.objects.filter(available=True).order_by('-stock')
-    return pagination(request,products)
+    products,paginator,features=pagination(request,products)
+    return render(request,'shop/product/list.html',
+                        {'products':products,
+                        'paginator':paginator,
+                        'features':features,
+                        })
 def product_most_viewed(request):
     products=Product.objects.filter(available=True).order_by('-number_of_click')
-    return pagination(request,products)
+    products,paginator,features=pagination(request,products)
+    return render(request,'shop/product/list.html',
+                        {'products':products,
+                        'paginator':paginator,
+                        'features':features,
+                        })
 # FEATURED willl be added urls and function
 def product_latest(request):
     products=Product.objects.order_by('-created')
-    return pagination(request,products)
+    products,paginator,features=pagination(request,products)
+    return render(request,'shop/product/list.html',
+                        {'products':products,
+                        'paginator':paginator,
+                        'features':features,
+                        })
+def collection_shop_list(request):
+    products=Product.objects.filter(available=True).order_by('-stock')
+    products,paginator,features=pagination(request,products)
+    return render(request,'shop/product/shop_list.html',
+                        {'products':products,
+                        'paginator':paginator,
+                        'features':features,
+                        })
 def pagination(request,products):
-    features=['Size','Color','Room']
+    
     colors=Color.objects.all()
     sizes=Size.objects.all()
     rooms=Room.objects.all()
     paginator=Paginator(products,8)
     page=request.GET.get('page')
+    features={'color':colors,'room':rooms,'size':sizes,}
     try:
         products=paginator.page(page)
     except PageNotAnInteger:
         products=paginator.page(1)
     except EmptyPage: 
         products=paginator.page(paginator.num_pages)
-    return render(request,'shop/product/list.html',
-                        {'products':products,
-                        'paginator':paginator,
-                        'features':{
-                                    'color':colors,
-                                    'room':rooms,
-                                    'size':sizes,},
-                        })
+    return products,paginator,features
+    
 
     
 

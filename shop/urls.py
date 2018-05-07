@@ -8,11 +8,10 @@ urlpatterns=[
     url(r'^latest/$',views.product_latest,name='product_latest'),
     url(r'^all/$',views.product_list,name='product_list'),
     url(r'^most_viewed/$',views.product_most_viewed,name='product_most_viewed'),
+    url(r'^shop_list/$',views.collection_shop_list,name='collection_shop_list'),
     url(r'^$',views.product_list,name='product_list'),
-    
-    url(r'^(?P<slug>[-\w]+)/(?P<name>[-\w]+)/$',views.product_list_by_feature,name='product_list_by_feature'),
-    url(r'^(?P<room_slug>[-\w]+)/$',views.product_list_by_feature,name='product_list_by_feature'),
-    url(r'^(?P<size_slug>[-\w]+)/$',views.product_list_by_feature,name='product_list_by_feature'),
     url(r'^(?P<id>\d+)/(?P<slug>[-\w]+)/$',views.product_detail,name='product_detail'),
+    url(r'^(?P<slug>[-\w]{,5})/(?P<name>[-\w]+)/$',views.product_list_by_feature,name='product_list_by_feature'),
+    
 ]
 
