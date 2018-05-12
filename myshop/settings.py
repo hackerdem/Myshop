@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+
+from django.conf import settings
 from .settings_data import SECRET,FACEBOOK_KEY,FACEBOOK_SECRET, \
             GOOGLE_KEY,GOOGLE_SECRET,TWITTER_KEY,TWITTER_SECRET, \
             PAYPAL_EMAIL,EMAIL_USER,EMAIL_PORT_NUMBER,EMAIL_PASSWORD
@@ -46,7 +48,7 @@ INSTALLED_APPS = (
     'shop',
     'cart',
     'purchases',
-    #'paypal.standard.ipn',
+    'paypal.standard.ipn',
     'payment',
 
   
@@ -164,3 +166,6 @@ EMAIL_PORT = EMAIL_PORT_NUMBER
 
 PAYPAL_RECEIVER_EMAIL=PAYPAL_EMAIL
 PAYPAL_TEST=True
+
+# no email and print in console
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
