@@ -18,11 +18,13 @@ from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
 urlpatterns = [
+
     url(r'^paypal/',include('paypal.standard.ipn.urls')),
     url(r'^payment/',include('payment.urls',namespace='payment')),
-    url(r'^admin/', include(admin.site.urls)),
+    url(r'^adminosmagnificos/', include(admin.site.urls)),
     url(r'^cart/',include('cart.urls',namespace='cart')),
     url(r'^account/',include('account.urls',namespace='account')),
+    url(r'^coupons/',include('coupons.urls',namespace='coupons')),
     url(r'^shop/',include('shop.urls',namespace='shop')),
     url('social-auth/',include('social.apps.django_app.urls',namespace='social')),
     url(r'^',include('shop.urls',namespace='shop')),

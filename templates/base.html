@@ -4,36 +4,13 @@
 <html lang="en">
 <!--<![endif]-->
   <head>
-    <!-- Basic Page Needs -->
-    <meta charset="utf-8">
-    <title>Empire</title>
-    <!-- SEO Meta -->
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="description" content="">
-    <meta name="keywords" content="">
-    <meta name="distribution" content="global">
-    <meta name="revisit-after" content="2 Days">
-    <meta name="robots" content="ALL">
-    <meta name="rating" content="8 YEARS">
-    <meta name="Language" content="en-us">
-    <meta name="GOOGLEBOT" content="NOARCHIVE">
-    <!-- Mobile Specific Metas -->
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-	
-    <!-- CSS -->
-   
-      <!--<link rel="stylesheet" type="text/css" href="{% static "css/font-awesome.min.css" %}">
-      <link rel="stylesheet" type="text/css" href="{% static "css/jquery-ui.css" %}">
-        <link rel="stylesheet" type="text/css" href="{% static "css/fotorama.css" %}">
-      -->
-    <link rel="stylesheet" type="text/css" href="{% static "css/bootstrap.css" %}">
-    <link rel="stylesheet" type="text/css" href="{% static "css/font-awesome.min.css" %}">
+    {% block meta %}
+    {% include "allmeta.html" %}
+    {% endblock %}
     
-    <link rel="stylesheet" type="text/css" href="{% static "css/owl.carousel.css" %}">
-   
-    <link rel="stylesheet" type="text/css" href="{% static "css/magnific-popup.css" %}">
-    <link rel="stylesheet" type="text/css" href="{% static "css/custom.css" %}">
-    <link rel="stylesheet" type="text/css" href="{% static "css/responsive.css" %}">
+    {% block css %}
+    {% include "allcss.html" %}
+    {% endblock %}
     <link rel="shortcut icon" href="{% static "images/favicon.png" %}">
     <link rel="apple-touch-icon" href="{% static "images/apple-touch-icon.html" %}">
     <link rel="apple-touch-icon" sizes="72x72" href="{% static "images/apple-touch-icon-72x72.html" %}">
@@ -306,141 +283,15 @@
         </div>
       </div>
       <!-- SEARCH POPUP ENDS -->
-      {% block content %}
+    {% block content %}
 
-      {% endblock %}
-      <!-- FOOTER START -->
-      <div class="footer">
-        <div class="footer-inner">
-          <div class="footer-middle">
-            <div class="container">
-              <div class="row">
-                <div class="col-md-3 f-col">
-                  <div class="footer-static-block">
-                    <span class="opener plus"></span>
-                    <h3 class="title">Information</h3>
-                    <ul class="footer-block-contant link">
-                      <li><a>About Us</a></li>
-                      <li><a>Delivery Information</a></li>
-                      <li><a>Privacy Policy</a></li>
-                      <li><a>Terms & Conditions</a></li>
-                      <li><a>Gift Certificates</a></li>
-                    </ul>
-                  </div>
-                </div>
-                <div class="col-md-3 f-col">
-                  <div class="footer-static-block">
-                    <span class="opener plus"></span>
-                    <h3 class="title">Help</h3>
-                    <ul class="footer-block-contant link">
-                      <li><a>About Us</a></li>
-                      <li><a>Delivery Information</a></li>
-                      <li><a>Privacy Policy</a></li>
-                      <li><a>Terms & Conditions</a></li>
-                      <li><a>Gift Certificates</a></li>
-                    </ul>
-                  </div>
-                </div>
-                <div class="col-md-3 f-col">
-                  <div class="footer-static-block">
-                    <span class="opener plus"></span>
-                    <h3 class="title">Guidance</h3>
-                    <ul class="footer-block-contant link">
-                      <li><a>About Us</a></li>
-                      <li><a>Delivery Information</a></li>
-                      <li><a>Privacy Policy</a></li>
-                      <li><a>Terms & Conditions</a></li>
-                      <li><a>Gift Certificates</a></li>
-                    </ul>
-                  </div>
-                </div>
-                <div class="col-md-3 f-col">
-                  <div class="footer-static-block">
-                    <span class="opener plus"></span>
-                    <h3 class="title">Contact</h3>
-                    <ul class="footer-block-contant address-footer">
-                      <li><p>Astokom Ltd</p></li>
-                      <li><p>Astokom koyu </p></li>
-                      <li><p>Tercan, Erzincan</p></li>
-                      <li><p><a>werdem@gmail.com</a></p></li>
-                      <li><p>029-222-222-22-22</p></li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <hr>
-          <div class="footer-bottom top">
-            <div class="container">
-              <div class="col-sm-12 align-center">
-                <div class="copy-right center-xs">© 2018  All Rights Reserved. <a href="#"></a></div>
-              </div>
-            </div>
-          </div>
-          <hr>
-          <div class="bottom">
-            <div class="container">
-              <div class="row">
-                <div class="col-sm-6">
-                  <div class="payment left-side center-xs">
-                    <ul class="payment_icon">
-                      <li class="visa"><a><img src="{% static "images/pay1.png" %}" alt="Empire"></a></li>
-                      <li class="discover"><a><img src="{% static "images/pay2.png" %}" alt="Empire"></a></li>
-                      <li class="paypal"><a><img src="{% static "images/pay3.png" %}" alt="Empire"></a></li>
-                      <li class="vindicia"><a><img src="{% static "images/pay4.png" %}" alt="Empire"></a></li>
-                      <li class="atos"><a><img src="{% static "images/pay5.png" %}" alt="Empire"></a></li>
-                    </ul>
-                  </div>
-                </div>
-                <div class="col-sm-6">
-                  <div class="footer_social pt-xs-15 center-xs mt-xs-15 right-side">
-                    <ul class="social-icon">
-                      <li><a title="Facebook" class="facebook"><i class="fa fa-facebook"> </i></a></li>
-                      <li><a title="Twitter" class="twitter"><i class="fa fa-twitter"> </i></a></li>
-                      <li><a title="Linkedin" class="linkedin"><i class="fa fa-linkedin"> </i></a></li>
-                      <li><a title="RSS" class="rss"><i class="fa fa-rss"> </i></a></li>
-                      <li><a title="Pinterest" class="pinterest"><i class="fa fa-pinterest"> </i></a></li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="scroll-top">
-        <div id="scrollup"></div>
-      </div>
-      <!-- FOOTER END --> 
+    {% endblock %}
+    {% block footer %}
+    {% include 'footer.html' %}
+    {% endblock %}
     </div>
-    <!-- MAIN END -->
-    <!-- JS FILES STARTS -->
-    <script src="{% static 'js/jquery-1.12.3.min.js' %}"></script> 
-    <script src="{% static 'js/bootstrap.min.js' %}"></script>  
-    <script src="{% static 'js/jquery-ui.min.js' %}"></script> 
-    <script src="{% static 'js/fotorama.js' %}"></script>
-    <script src="{% static 'js/owl.carousel.min.js' %}"></script> 
-    <script src="{% static 'js/custom.js' %}"></script>
-    <script type="text/javascript">
-      function theFunction (param) {
-        window.location.href =param;
-      }
-  </script>
-  <script>
-    function SetBilling(){
-      var i;
-      var formelements=['first_name','email','last_name','contact','address','landmark','country','city','postcode','state']
-      for (i=0;i<formelements.length;i++){
-      document.getElementById('id_'+'billing_'+formelements[i]).value = document.getElementById('id_'+'shipping_'+formelements[i]).value; 
-    }}
-    
-    //var option = document.getElementById('shipping'+formelements[i]+'Id');
-    //  var selection = option.options[e.selectedIndex].value;
-    //  document.getElementById('billing'+formelements[i]+'Id').value =selection; 
-    
-  </script>
-    <!-- JS FILES END -->
+    {% block alljs %}
+    {% include 'alljs.html' %}
+    {% endblock %}
   </body>
 </html>

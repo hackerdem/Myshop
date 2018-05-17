@@ -1,0 +1,28 @@
+{% load staticfiles %}
+<!-- MAIN END -->
+    <!-- JS FILES STARTS -->
+    <script src="{% static 'js/jquery-1.12.3.min.js' %}"></script> 
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>  
+    <script src="{% static 'js/jquery-ui.min.js' %}"></script> 
+    <script src="{% static 'js/fotorama.js' %}"></script>
+    <script src="{% static 'js/owl.carousel.min.js' %}"></script> 
+    <script src="{% static 'js/custom.js' %}"></script>
+    <script type="text/javascript">
+      function theFunction (param) {
+        window.location.href =param;
+      }
+  </script>
+  <script>
+    function SetBilling(){
+      var i;
+      var formelements=['first_name','email','last_name','contact','address','landmark','country','city','postcode','state']
+      for (i=0;i<formelements.length;i++){
+      document.getElementById('id_'+'billing_'+formelements[i]).value = document.getElementById('id_'+'shipping_'+formelements[i]).value; 
+    }}
+    
+    //var option = document.getElementById('shipping'+formelements[i]+'Id');
+    //  var selection = option.options[e.selectedIndex].value;
+    //  document.getElementById('billing'+formelements[i]+'Id').value =selection; 
+    
+  </script>
+    <!-- JS FILES END -->

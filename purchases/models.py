@@ -1,7 +1,12 @@
 from django.db import models
 from shop.models import Product
+from decimal import Decimal
+from django.core.validators import MinValueValidator,MaxValueValidator
+from coupons.models import Coupon
 
 class Purchase(models.Model):
+    coupon=models.ForeignKey(Coupon,related_name='purchases',null=True,blank=True)
+    discount=models.IntegerField(default=0,validators=[MinValueValidator(0),MaxValueValidator(100)])
     shipping_first_name=models.CharField(max_length=50,blank=False,null=False)
     shipping_last_name=models.CharField(max_length=50,blank=False,null=False)
     shipping_email=models.EmailField(blank=False)
@@ -34,7 +39,8 @@ class Purchase(models.Model):
         return 'Purchase {}'.format(self.id)
 
     def get_total_cost(self):
-        return sum(item.get_cost() for item in self.items.all())
+        total_cost=sum(item.get_cost() for item in self.items.all())
+        return total_cost-total_cost*(self.discount/Decimal('100'))
 
 class PurchaseItem(models.Model):
     purchase=models.ForeignKey(Purchase,related_name='items')

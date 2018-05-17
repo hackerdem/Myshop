@@ -42,8 +42,11 @@ def purchase_create(request):
         form=PurchaseCreateForm(request.POST)
         try:
             if form.is_valid():
-                print('form is valid')
-                purchase=form.save()
+                purchase=form.save(commit=False)
+                if cart.coupon:
+                    purchase.coupon=cart.coupon 
+                    purchase.discount=cart.coupon.discount
+                purchase.save()
                 for item in cart:
                     PurchaseItem.objects.create(purchase=purchase,
                                             product=item['product'],

@@ -57,6 +57,15 @@
                               <option value="4">4</option>
                             </select>
                           </div></td>
+
+                          {% if cart.coupon %}
+                          <td>
+                          <li>
+                          "{{ cart.coupon.code }}" ({{ cart.coupon.discount }}% off)
+                          
+                          </li>
+                          </td>
+                          {% endif %}
                         <td><div class="total-price price-box"> <span class="price">${{ item.total_price }}</span> </div></td>
                         <td><a href="{% url "cart:cart_remove" product.id %}"><i title="Remove Item From Cart" data-id="100" class="fa fa-trash cart-remove-item"></i></td>
                       </tr>
@@ -81,8 +90,34 @@
           <hr>
           <div class="mtb-30">
             <div class="row">
+              
+                <p>Apply a coupon:</p>
+                <form action="{% url "coupons:apply" %}" method="post">
+                {{ coupon_apply_form }}
+                <input type="submit" value="Apply">
+                {% csrf_token %}
+                </form>
+              <!--
+                <div class="heading-part mb-20">
+                    <h3 class="sub-heading">Coupon</h3>
+                  </div>
+                  <form id='apply_coupon_id' class="full" action="{% url "coupons:apply" %}" method="post">
+                     {% csrf_token %}
+                        <div class="col-sm-6">
+                            <div class="input-box">
+                                <input  name='code' type="text" required placeholder="Coupon Code">
+                              </div>
+                        </div>
+                        <div class="col-sm-6">
+                         <a class="btn-color btn" href="javascript:{}" onclick="document.getElementById('apply_coupon_id').submit();">Apply Coupon</a>
+                      </div>
+                    </form>
+                    -->
+            </div>
+            <div class="row">
               <div class="col-sm-6 mb-xs-40">
                 <div class="estimate">
+                    
                   <div class="heading-part mb-20">
                     <h3 class="sub-heading">Estimate shipping and tax</h3>
                   </div>
@@ -132,13 +167,22 @@
                           <td>Item(s) Subtotal</td>
                           <td><div class="price-box"> <span class="price">${{ cart.get_total_price }}</span> </div></td>
                         </tr>
+                        {% if cart.coupon %}
                         <tr>
+                            
+                            <td>"{{ cart.coupon.code }}" ({{ cart.coupon.discount }}% off)</td>
+                            <td><div class="price-box"> <span class="price">- ${{ cart.get_discount|floatformat:"2" }}</span> </div></td>
+                          </tr>
+                          {% endif %}
+                        
+                        <tr>
+                          
                           <td>Shipping</td>
-                          <td><div class="price-box"> <span class="price">$0.00</span> </div></td>
+                          <td><div class="price-box"> <span class="price"></span> </div></td>
                         </tr>
                         <tr>
                           <td><b>Amount Payable</b></td>
-                          <td><div class="price-box"> <span class="price"><b>${{ cart.get_total_price }}</b></span> </div></td>
+                          <td><div class="price-box"> <span class="price"><b>{% if cart.coupon %} ${{ cart.get_total_price_after_discount|floatformat:"2" }} {% else %} ${{ cart.get_total_price }} {% endif %} </b></span> </div></td>
                         </tr>
                       </tbody>
                     </table>
