@@ -1,7 +1,11 @@
 from django.contrib import admin
-from .models import Product,Room,Size,Color
+from .models import Product,Room,Size,Color,Category
 from account.models import UserActivation
 
+class CategoryAdmin(admin.ModelAdmin):
+    list_display=['name','slug']
+    prepopulated_fields={'slug':('name',)}
+admin.site.register(Category,CategoryAdmin)
 class SizeAdmin(admin.ModelAdmin):
     list_display=['name','slug']
     prepopulated_fields={'slug':('name',)}
@@ -18,10 +22,10 @@ class RoomAdmin(admin.ModelAdmin):
 admin.site.register(Room,RoomAdmin)
 
 class ProductAdmin(admin.ModelAdmin):
-    list_display=['name','slug','id','room','size','color','number_of_click','price','stock',
+    list_display=['name','slug','id','category','room','size','color','number_of_click','price','stock',
                   'available','created','updated']
     list_filter=['available','created','updated']
-    list_editable=['room','size','color','price','stock','available','number_of_click']
+    list_editable=['room','size','color','price','stock','category','available',]
     prepopulated_fileds={'slug':('name',)}
 admin.site.register(Product,ProductAdmin)
 

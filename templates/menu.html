@@ -1,0 +1,194 @@
+{%load staticfiles %}
+<!-- HEADER START -->
+<header class="navbar navbar-custom " id="header">
+    <!-- CONTAINER START -->
+    <div class="container">
+      <!-- ROW START -->
+      <div class="row">
+        <!-- HEADER LOGO START-->
+        <div class="col-md-3 col-xs-6">
+          <div class="navbar-header">
+            <a class="navbar-brand page-scroll" href="index.html"> 
+              <img alt="Empire" src="{% static 'images/logo.png' %}"> 
+            </a>
+          </div>
+        </div>
+        <!-- HEADER LOGO END-->
+        <!-- HEADER ICONS START-->
+        <div class="col-md-3 col-xs-6 right-side">
+          <div class="header-right-link right-side float-none-xs">
+            <ul>
+              <li class="search-box">
+                <a href="#">
+                  <span></span>
+                </a>
+              </li>
+    
+              <li class="account-icon">
+                <a href="#">
+                  <span></span>
+                </a>
+                <div class="header-link-dropdown account-link-dropdown">
+                  <ul class="link-dropdown-list">
+                    {% if request.user.is_authenticated %}
+                    <li>
+                        <span class="dropdown-title">
+                          Hello {{ request.user.first_name }},
+                        </span>
+                        <ul>
+                            <li>
+                                <a href="account/logout/">Dashboard</a>
+                              </li>
+                              <li>
+                                  <a href="account/logout/">Orders</a>
+                                </li>
+                          <li>
+                            <a href="{% url "account:logout" %}">Logout</a>
+                          </li>
+                        
+                        </ul>
+                      </li>
+                    {% else %}
+                    <li>
+                      <span class="dropdown-title">
+                        Welcome Message!
+                      </span>
+                      <ul>
+                        <li>
+                          <a href="{% url "account:login" %}">Sign In</a>
+                        </li>
+                        <li>
+                          <a href="{% url "account:register" %}">Create an Account</a>
+                        </li>
+                      </ul>
+                    </li>
+                    {% endif %}
+                    <li>
+                      <span class="dropdown-title">
+                        Language :
+                      </span>
+                      <ul>
+                        <li><a class="active" href="#">English</a></li>
+                        <li><a href="#">French</a></li>
+                        <li><a href="#">German</a></li>
+                      </ul>
+                    </li>
+                    <li>
+                      <span class="dropdown-title">
+                        Currency :
+                      </span>
+                      <ul>
+                        <li><a class="active" href="#">USD</a></li>
+                        <li><a href="#">AUD</a></li>
+                        <li><a href="#">EUR</a></li>
+                      </ul>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+              {% block cart %}
+              {% include 'cart.html' %}
+              {% endblock %}
+              
+            </ul>
+          </div>
+          <!-- HEADER TOGGLE BUTTON START-->
+          <button data-target=".navbar-collapse" data-toggle="collapse" class="navbar-toggle" type="button">
+            <i class="fa fa-bars"></i>
+          </button>
+          <!-- HEADER TOGGLE BUTTON END-->
+        </div>
+        <!-- HEADER ICONS END-->
+        <!-- HEADER MENU START-->
+        <div class="col-md-6 col-sm-12 position-s left-side float-none-xs">
+          <div class="align-center">
+            <div id="menu" class="navbar-collapse collapse">
+              <ul class="nav navbar-nav">
+                <li class="level">
+                  <a href={% url "shop:product_list" %}>Home</a>
+                </li>
+                
+                <li class="level dropdown">
+                  <span class="opener plus"></span>
+                  <a href={% url "shop:collection_shop_list" %} class="page-scroll">
+                    Collections
+                  </a>
+                  <!-- MEGA MENU START-->
+                  <div class="megamenu mobile-sub-menu">
+                    <!-- MEGA MENU TOP START-->
+                    <div class="megamenu-inner-top">
+                      <ul class="sub-menu-level1">
+                        {% for key,value in features.items %}
+                        <!--fix the argument in main li-->
+                        <li class="level2 "> <a href={% url "shop:size_color_room_filter" key %}><span>Shop by {{ key }}</span></a>
+                          <ul class="sub-menu-level2">
+                              {% for feature_option in value %}
+                              <li class="level3"><a href="{{ feature_option.get_absolute_url }}" >{{ feature_option }}</a></li>
+                              {% endfor %}
+                          </ul>
+                        </li>
+                        {% endfor %}
+          
+                      </ul>
+                    </div>
+                    <!-- MEGA MENU TOP END-->
+                    <!-- MEGA MENU BOTTOM END-->
+                    <div class="megamenu-inner-bottom mt-20 visible-lg visible-md">
+                      <a href="shop.html">
+                        <img src="{% static 'images/drop_banner1.png' %}" alt="Empire">
+                      </a>
+                    </div> 
+                    <!-- MEGA MENU BOTTOM END-->
+                  </div>
+                  <!-- MEGA MENU END-->
+                </li>
+                
+                <li class="level dropdown">
+                  <span class="opener plus"></span>
+                  <a href="#">Contact</a>
+                  <div class="megamenu mobile-sub-menu">
+                    <div class="megamenu-inner-top">
+                      <ul class="sub-menu-level1">
+                        <li class="level2">
+                          <ul class="sub-menu-level2">
+                            <li class="level3"><a href="blog.html">Blog</a></li>
+                            <li class="level3"><a href="single-blog.html">Single Blog</a></li>
+                          </ul>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </li>
+                <li class="level">
+                  <a href="cart.html">Artists</a>
+                </li>
+                <li class="level dropdown">
+                  <span class="opener plus"></span>
+                  <a href="#">About Us</a>
+                  <div class="megamenu mobile-sub-menu">
+                    <div class="megamenu-inner-top">
+                      <ul class="sub-menu-level1">
+                        <li class="level2">
+                          <ul class="sub-menu-level2 ">
+                            <li class="level3"><a href="about.html">About Us</a></li>
+                            <li class="level3"><a href="product-page.html">Product</a></li>
+                            <li class="level3"><a href="{% url "purchases:purchase_create" %}">Checkout</a></li>
+                            <li class="level3"><a href="contact.html">Contact</a></li>
+                            <li class="level3"><a href="404.html">404 Error</a></li>
+                          </ul>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <!-- HEADER MENU END-->
+      </div>
+      <!-- ROW END -->
+    </div>
+    <!-- CONTAINER END -->
+  </header>
+  <!-- HEADER END -->
