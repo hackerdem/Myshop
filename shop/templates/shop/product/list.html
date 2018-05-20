@@ -47,24 +47,46 @@
                             <div class="detail-inner-left">
                               <ul>
                                 <li class="pro-cart-icon">
-                                  <form id='cardaddform' action="{% url "cart:cart_add" product.id %}" method="post">
+                                  <form id='{{product.name}}' action="{% url "cart:cart_add" product.id %}" method="post">
+                                      {% with users_like=product.users_like.all %}
                                       {{ cart_product_form }}
                                       {% csrf_token %}
-                                      <a href="javascript:{}" onclick="document.getElementById('cardaddform').submit();"></a>
+                                      <a href="javascript:{}" onclick="document.getElementById('{{product.name}}').submit();"></a>
                                       </form>
                                     </li>
-                                <li class="pro-wishlist-icon"><a href="#"></a></li>
+                                <li class="pro-wishlist-icon"><a href="#" data-id="{product.id}" data-action="{% if request.user in users_like %}un{% endif %}like">
+                                    
+                                </a></li>
                               </ul>
                             </div>
                           </div>
                         </div>
                       </div>
 
-                      
+                      {% endwith %}
                       {% endfor %}
                     </div>
               </div>
             </div>
         </div>
+        {% block domready %}
+        $('a.like').click(function(e){
+          e.preventDefault();
+          $.post('{% url "shop:like" %}',
+          {id:$(this).data('id'),
+        action:$(this).data('action')
+        },
+        fuction(data){
+          if (data['status'] == 'ok')
+          {
+            var previous_action=$('a.like').data('action');
+            $('a.like').data('action',previous_action=='like' ? 'unlike' : 'like');
+            $('a.like').text('action',previous_action=='like' ? 'unlike' : 'Like');
+          }
+        }
+        );
+        
+          });
+          {% endblock %}
         {% include "pagination.html" with page=products %}
 {% endblock %}

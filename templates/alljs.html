@@ -13,6 +13,13 @@
       }
   </script>
   <script>
+      $(document).ready(function(){
+        {% block domready %}
+        {% endblock %}
+          });
+
+  </script>
+  <script>
     function SetBilling(){
       var i;
       var formelements=['first_name','email','last_name','contact','address','landmark','country','city','postcode','state']
@@ -25,4 +32,21 @@
     //  document.getElementById('billing'+formelements[i]+'Id').value =selection; 
     
   </script>
+  
+
+  <script>
+    var csrftoken = $.cookie('csrftoken');
+    function csrfSafeMethod(method) {
+    // these HTTP methods do not require CSRF protection
+    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+    }
+    $.ajaxSetup({
+    beforeSend: function(xhr, settings) {
+    if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+    xhr.setRequestHeader("X-CSRFToken", csrftoken);
+    }
+    }
+    });
+  
+</script>
     <!-- JS FILES END -->

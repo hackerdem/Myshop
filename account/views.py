@@ -1,7 +1,8 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse,HttpResponseRedirect
 from django.contrib.auth import authenticate,login,logout
-from .forms import LoginForm,UserRegistrationForm
+from .forms import LoginForm
+from authentication.forms import UserRegistrationForm
 from django.contrib.auth.models import User
 from .models import Profile,UserActivation
 from django.shortcuts import redirect
@@ -13,17 +14,18 @@ from django.template.loader import render_to_string
 from .tokens import account_activation_token
 from django.contrib.auth.tokens import default_token_generator
 from datetime import datetime
-
+def user_dashboard(request):
+    return render(request,'account/dashboard.html')
 def user_login(request):
     if request.method=='POST':
         form=LoginForm(request.POST)
         if form.is_valid():
             cd=form.cleaned_data
-            user=authenticate(username=cd['username'],password=cd['password'])
+            user=authenticate(username=cd['email'],password=cd['password'])
             if user is not None:
                 if user.is_active:
                     login(request,user)
-                    return render(request,'account/dashboard.html')#### THERE IS A PROBLEM HERE FIX IT LATER####
+                    return HttpResponseRedirect('/account/dashboard/')
                 else:
                     return HttpResponse('Disabled account')
             else:
@@ -44,12 +46,10 @@ def user_register(request):
             new_user.set_password(user_form.cleaned_data['password'])
             new_user.is_active=False
             new_user.save()
-            print(new_user.pk,'ssdsdsd')
             uid=urlsafe_base64_encode(force_bytes(new_user.pk)).decode()
             token=account_activation_token.make_token(new_user)
             current_site = get_current_site(request)
             mail_subject = 'Activate your artsshop account.'
-            print(uid,token)
             message = render_to_string('account/confirmation_mail.html', {
                 'user': new_user,
                 'domain': current_site.domain,

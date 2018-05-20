@@ -45,6 +45,7 @@ INSTALLED_APPS = (
     'social.apps.django_app.default',
     'social_django',
     'account',
+    'authentication',
     'shop',
     'cart',
     'purchases',
@@ -106,8 +107,7 @@ WSGI_APPLICATION = 'myshop.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
-
-
+"""
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -125,7 +125,8 @@ DATABASES = {
         'PORT': '5432',
     }
 }
-"""
+
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
@@ -172,3 +173,5 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 REDIS_HOST='localhost'
 REDIS_PORT=6379
 REDIS_DB=1
+
+AUTH_USER_MODEL = 'authentication.User'

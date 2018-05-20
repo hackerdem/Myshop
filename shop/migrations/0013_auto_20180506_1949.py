@@ -14,6 +14,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='product',
             name='size',
-            field=models.ForeignKey(to='shop.Size', related_name='products', default='ng'),
+            field=models.ForeignKey(to='shop.Size', related_name='products', default='1'),
         ),
     ]

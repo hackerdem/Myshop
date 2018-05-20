@@ -1,11 +1,12 @@
 from django.db import models
 from django.conf import settings
 
-from django.contrib.auth.models import User
+from authentication.models import User
 from django.utils.translation import ugettext as _
 from django.contrib.auth.backends import ModelBackend
 from django.contrib.auth import get_user_model
 from datetime import datetime
+
 class Profile(models.Model):
     username=models.EmailField(_('Email address'),max_length=64,blank=False)
     name=models.TextField(_('name'),max_length=64,blank=False)

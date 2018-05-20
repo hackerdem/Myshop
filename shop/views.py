@@ -7,6 +7,26 @@ from cart.cart import Cart
 from django.http import JsonResponse
 from django.views.decorators.http import require_POST
 
+@require_POST
+def product_liked(request):
+    print("I AM HERE")
+    product_id=request.POST.get('id')
+    if not request.user.is_authenticated:
+        pass # change object attribute later
+    else:
+        action=request.POST.get('action')
+        if product_id and action:
+            try:
+                product=Product.objects.get(id=product_id)
+                if action=='like':
+                    product.users_like.add(request.user)
+                else:
+                    product.users_like.remove(remove.user)
+                return JsonResponse({'status':'ok'})
+            except:
+                pass
+        return JsonResponse({'status':'ko'})
+
 def size_color_room_filter(request,slug):
     
     products=Product.objects.order_by('-{}'.format(slug))

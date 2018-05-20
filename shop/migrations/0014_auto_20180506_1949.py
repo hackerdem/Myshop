@@ -14,11 +14,11 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='product',
             name='color',
-            field=models.ForeignKey(default='ng', to='shop.Color', related_name='products'),
+            field=models.ForeignKey(default='1', to='shop.Color', related_name='products'),
         ),
         migrations.AlterField(
             model_name='product',
             name='room',
-            field=models.ForeignKey(default='ng', to='shop.Room', related_name='products'),
+            field=models.ForeignKey(default='1', to='shop.Room', related_name='products'),
         ),
     ]

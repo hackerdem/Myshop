@@ -23,8 +23,9 @@ admin.site.register(Room,RoomAdmin)
 
 class ProductAdmin(admin.ModelAdmin):
     list_display=['name','slug','id','category','room','size','color','number_of_click','price','stock',
-                  'available','created','updated']
+                  'available','created','updated',]
     list_filter=['available','created','updated']
+    readonly_fields=['number_of_click','users_like','slug']
     list_editable=['room','size','color','price','stock','category','available',]
     prepopulated_fileds={'slug':('name',)}
 admin.site.register(Product,ProductAdmin)
