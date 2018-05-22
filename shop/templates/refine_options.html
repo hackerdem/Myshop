@@ -1,9 +1,10 @@
-{% load refine_group_tags %}
+
 <div class="sidebar-block">
     <div class="sidebar-box listing-box mb-40"> <span class="opener plus"></span>
       <div class="sidebar-title">
-        
-        <h3>Categories</h3> <span></span>
+        {% for category in features.category %}
+        <h3>{category.name}</h3> <span></span>
+        {% endfor %}
       </div>
       <div class="sidebar-contant">
         <ul>

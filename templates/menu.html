@@ -23,7 +23,7 @@
                   <span></span>
                 </a>
               </li>
-    
+              
               <li class="account-icon">
                 <a href="#">
                   <span></span>
@@ -39,9 +39,7 @@
                             <li>
                                 <a href="{% url "account:user_dashboard" %}">Dashboard</a>
                               </li>
-                              <li>
-                                  <a href="account/logout/">Orders</a>
-                                </li>
+                            
                           <li>
                             <a href="{% url "account:logout" %}">Logout</a>
                           </li>
@@ -51,7 +49,7 @@
                     {% else %}
                     <li>
                       <span class="dropdown-title">
-                        Welcome Message!
+                        Welcome!
                       </span>
                       <ul>
                         <li>
@@ -63,26 +61,7 @@
                       </ul>
                     </li>
                     {% endif %}
-                    <li>
-                      <span class="dropdown-title">
-                        Language :
-                      </span>
-                      <ul>
-                        <li><a class="active" href="#">English</a></li>
-                        <li><a href="#">French</a></li>
-                        <li><a href="#">German</a></li>
-                      </ul>
-                    </li>
-                    <li>
-                      <span class="dropdown-title">
-                        Currency :
-                      </span>
-                      <ul>
-                        <li><a class="active" href="#">USD</a></li>
-                        <li><a href="#">AUD</a></li>
-                        <li><a href="#">EUR</a></li>
-                      </ul>
-                    </li>
+
                   </ul>
                 </div>
               </li>

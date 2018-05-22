@@ -1,6 +1,5 @@
 {% extends "base.html" %}
 {% load static %}
-{% load refine_group_tags %}
 {% block content %}
 
 <!-- CONTAIN START -->
@@ -8,8 +7,70 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-2 col-md-3 col-sm-4 mb-sm-30 sidebar-col">
-          {% show refine_options %}
-          {% endblock %}
+        
+<div class="sidebar-block">
+  <div class="sidebar-box listing-box mb-40"> <span class="opener plus"></span>
+    <div class="sidebar-title">
+        <h3>Categories</h3> <span></span>
+      </div>
+    <div class="sidebar-contant">
+      <ul>
+          {% for category in features.category %}
+          <li class="list-group-item">
+              <div class="material-switch pull-right">
+                  <input id="{{ category.name }}" name="someSwitchOption001" type="checkbox"/>
+                  <label for="someSwitchOptionWarning" class="label-warning"></label>
+              </div>
+              {{ category.name }}
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+  <div class="sidebar-box mb-40"> <span class="opener plus"></span>
+    <div class="sidebar-title">
+      <h3>Shop by</h3> <span></span>
+    </div>
+    <div class="sidebar-contant">
+      <div class="price-range mb-30">
+        <div class="inner-title">Price range</div>
+        <input class="price-txt" type="text" id="amount">
+        <div id="slider-range"></div>
+      </div>
+      <div class="size mb-20">
+        <div class="inner-title">Size</div>
+
+        <ul >
+          {% for size in features.size %}
+          <!-- for this li group css formatting is not working and all deleted-->
+          <li class="list-group-item">
+              <div class="material-switch pull-right">
+                  <input id="{{ size.name }}" name="someSwitchOption001" type="checkbox"/>
+                  <label for="someSwitchOptionWarning" class="label-warning"></label>
+              </div>
+              {{ size.name }}
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+      <div class="mb-20">
+        <div class="inner-title">Color</div>
+        <ul>
+          {% for color in features.color %}
+          <li class="list-group-item">
+              <div class="material-switch pull-right">
+                  <input id="{{ color.name }}" name="someSwitchOption001" type="checkbox"/>
+                  <label for="someSwitchOptionWarning" class="label-warning"></label>
+              </div>
+              {{ color.name }}
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+      
+      <a href="#" class="btn btn-color">Refine</a> </div>
+  </div>
+  <div class="sidebar-box sidebar-item"> <span class="opener plus"></span>
               <div class="sidebar-title">
                 <h3>Best Seller</h3> <span></span>
               </div>
@@ -29,34 +90,8 @@
                       </div>
                     </div>
                   </li>
-                  <li>
-                    <div class="pro-media"> <a><img alt="T-shirt" src="images/2.png"></a> </div>
-                    <div class="pro-detail-info"> <a>Black Print</a>
-                      <div class="rating-summary-block">
-                        <div class="rating-result" title="53%"> <span style="width:53%"></span> </div>
-                      </div>
-                      <div class="price-box"> <span class="price">$80.00</span> </div>
-                      <div class="cart-link">
-                        <form>
-                          <button title="Add to Cart">Add To Cart</button>
-                        </form>
-                      </div>
-                    </div>
-                  </li>
-                  <li>
-                    <div class="pro-media"> <a><img alt="T-shirt" src="images/3.png"></a> </div>
-                    <div class="pro-detail-info"> <a>Black Print</a>
-                      <div class="rating-summary-block">
-                        <div class="rating-result" title="53%"> <span style="width:53%"></span> </div>
-                      </div>
-                      <div class="price-box"> <span class="price">$80.00</span> </div>
-                      <div class="cart-link">
-                        <form>
-                          <button title="Add to Cart">Add To Cart</button>
-                        </form>
-                      </div>
-                    </div>
-                  </li>
+                  
+                 
                 </ul>
               </div>
             </div>
@@ -103,112 +138,24 @@
             </div>
           </div>
           <div class="product-listing list-type">
+              {% for product in products %}
             <div class="row">
-              <div class="col-lg-6 col-sm-12">
-                <div class="shop-list-view">
-                  <div class="product-item col-sm-6">
-                    <div class="sale-label"><span>Sale</span></div>
-                    <div class="product-image"> 
-                      <a href="product-page.html"></a>  
-                      <img src="images/1.png" alt="Empire">
-                    </div>
-                  </div>
-                  <div class="product-item-details col-sm-6">
-                    <div class="product-item-name"> 
-                      <a href="product-page.html">Cross Colours Camo Print </a> 
-                    </div>
-                    <div class="rating-summary-block">
-                      <div title="53%" class="rating-result"> <span style="width:53%"></span> </div>
-                    </div>
-                    <div class="price-box"> <span class="price">$80.00</span> <del class="price old-price">$100.00</del> </div>
-                    <p>Proin lectus ipsum, gravida et mattis vulputate, tristique ut lectus. Sed et lorem nunc. ipsum primis in faucibus orci luctus et ultrices.</p>
-                    <div class="bottom-detail">
-                      <ul>
-                        <li class="pro-cart-icon">
-                          <form>
-                            <button title="Add to Cart"><span></span></button>
-                          </form>
-                        </li>
-                        <li class="pro-wishlist-icon active"><a href="#"><span></span></a></li>
-                        <li class="pro-compare-icon"><a href="#"><span></span></a></li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-6 col-sm-12">
-                <div class="shop-list-view">
-                  <div class="product-item col-sm-6">
-                    <div class="product-image"> 
-                      <a href="product-page.html"></a>  
-                      <img src="images/2.png" alt="Empire">
-                    </div>
-                  </div>
-                  <div class="product-item-details col-sm-6">
-                    <div class="product-item-name"> <a href="product-page.html">Cross Colours Camo Print </a> </div>
-                    <div class="rating-summary-block">
-                      <div title="53%" class="rating-result"> <span style="width:53%"></span> </div>
-                    </div>
-                    <div class="price-box"> <span class="price">$80.00</span> <del class="price old-price">$100.00</del> </div>
-                    <p>Proin lectus ipsum, gravida et mattis vulputate, tristique ut lectus. Sed et lorem nunc. ipsum primis in faucibus orci luctus et ultrices.</p>
-                    <div class="bottom-detail">
-                      <ul>
-                        <li class="pro-cart-icon">
-                          <form>
-                            <button title="Add to Cart"><span></span></button>
-                          </form>
-                        </li>
-                        <li class="pro-wishlist-icon"><a href="#"><span></span></a></li>
-                        <li class="pro-compare-icon"><a href="#"><span></span></a></li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-6 col-sm-12">
-                <div class="shop-list-view">
-                  <div class="product-item col-sm-6">
-                    <div class="product-image"> 
-                      <a href="product-page.html"></a> 
-                      <img src="images/3.png" alt="Empire">
-                    </div>
-                  </div>
-                  <div class="product-item-details col-sm-6">
-                    <div class="product-item-name"> <a href="product-page.html">Cross Colours Camo Print</a> </div>
-                    <div class="rating-summary-block">
-                      <div title="53%" class="rating-result"> <span style="width:53%"></span> </div>
-                    </div>
-                    <div class="price-box"> <span class="price">$80.00</span> <del class="price old-price">$100.00</del> </div>
-                    <p>Proin lectus ipsum, gravida et mattis vulputate, tristique ut lectus. Sed et lorem nunc. ipsum primis in faucibus orci luctus et ultrices.</p>
-                    <div class="bottom-detail">
-                      <ul>
-                        <li class="pro-cart-icon">
-                          <form>
-                            <button title="Add to Cart"><span></span></button>
-                          </form>
-                        </li>
-                        <li class="pro-wishlist-icon"><a href="#"><span></span></a></li>
-                        <li class="pro-compare-icon"><a href="#"><span></span></a></li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              
               <div class="col-lg-6 col-sm-12">
                 <div class="shop-list-view">
                   <div class="product-item col-sm-6">
                     <div class="product-image">
-                      <a href="product-page.html"></a>
-                      <img src="images/4.png" alt="Empire"> 
+                      <a href="{{product.get_absolute_url }}"></a>
+                      <img src="{% if product.image %}{{product.image.url}}{% else %}{% static "images\no_images.png" %}{% endif %}" alt="Empire"> 
                     </div>
                   </div>
-                  <div class="product-item-details col-sm-6">
-                    <div class="product-item-name"> <a href="product-page.html">Cross Colours Camo Print</a> </div>
+                  <div class="product-item-details col-sm-8">
+                    <div class="product-item-name"> <a href="product-page.html">{{product.name}}</a> </div>
                     <div class="rating-summary-block">
                       <div title="53%" class="rating-result"> <span style="width:53%"></span> </div>
                     </div>
-                    <div class="price-box"> <span class="price">$80.00</span> <del class="price old-price">$100.00</del> </div>
-                    <p>Proin lectus ipsum, gravida et mattis vulputate, tristique ut lectus. Sed et lorem nunc. ipsum primis in faucibus orci luctus et ultrices.</p>
+                    <div class="price-box"> <span class="price">${{ product.price }}</span> <del class="price old-price">$100.00</del> </div>
+                    <p align='justify'>{{product.description | truncatechars:255 }}</p>
                     <div class="bottom-detail">
                       <ul>
                         <li class="pro-cart-icon">
@@ -223,7 +170,9 @@
                   </div>
                 </div>
               </div>
+              
             </div>
+            {% endfor %}
             <div class="row">
               <div class="col-xs-12">
                 <div class="pagination-bar">

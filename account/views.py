@@ -15,7 +15,8 @@ from .tokens import account_activation_token
 from django.contrib.auth.tokens import default_token_generator
 from datetime import datetime
 def user_dashboard(request):
-    return render(request,'account/dashboard.html')
+    profile=Profile.objects.filter(id=request.user.id)
+    return render(request,'account/dashboard.html',{'profile':profile})
 def user_login(request):
     if request.method=='POST':
         form=LoginForm(request.POST)

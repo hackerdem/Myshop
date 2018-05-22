@@ -3,7 +3,7 @@ from shop.models import Color,Size,Room,Category
 register=template.Library()
 
 @register.inclusion_tag('refine_options.html',takes_context=True)
-def show_menu(context):
+def show_refine_options(context):
     request = context['request']
     categories=Category.objects.all()
     colors=Color.objects.all()

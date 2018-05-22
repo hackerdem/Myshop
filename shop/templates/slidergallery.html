@@ -1,0 +1,15 @@
+{% load staticfiles %}
+{% load product_group_tags %}
+
+<div class="col-md-4 col-sm-4 col-xs-5">
+  
+    <div class="fotorama" data-nav="thumbs" data-allowfullscreen="native"> 
+      
+        {% for image in imagest %}
+        <a href="#"><img src="{{image.get_absolute_url}}" alt="Empire"></a> 
+      
+      
+      
+      {% endfor %}
+    </div>
+  </div>

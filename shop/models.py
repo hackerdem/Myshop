@@ -2,10 +2,7 @@ from django.db import models
 from django.core.urlresolvers import reverse
 from django.template.defaultfilters import slugify
 from django.conf import settings
-"""
-class User(AbstractUser):
-    class Meta(object):
-        unique_together = ('email',)"""
+
 class Category(models.Model):
     name=models.CharField(max_length=200,primary_key=True,
                           db_index=True)
@@ -102,12 +99,15 @@ class Product(models.Model):
         super(Product,self).save(*args,**kwargs)
 
 def get_image_filename(instance,filename):
-    return "hi"
-"""class Image(models.Model):
-    img_product_id=models.ForeignKey(Product,related_name="img_product_id",on_delete=models.CASCADE)
-    slug=slugify(img_product_id.name)
-    image=models.ImageField(upload_to='products/slug',
-                            verbose_name='Image',)
-    def __str__(self):
-        return self.img_product_id"""
+    title=instance.product.name
+    slug=slugify(title)
+    return "static/images/product_images/{}-{}".format(slug,filename)
 
+
+class Image(models.Model):
+    product=models.ForeignKey(Product,related_name='product',default=None,on_delete='CASCADE')
+    image=models.ImageField(upload_to=get_image_filename,verbose_name='image')
+    main_image=models.BooleanField(default=False)
+
+    def get_absolute_url(self):
+        return "{0}".format(self.image.url)

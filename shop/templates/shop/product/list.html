@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
-
+{% load product_group_tags %}
 {% block content %}
 <section class="ptb-95">
     <div class="container">
@@ -29,12 +29,14 @@
                     <!-- ALL TAB CONTENT START -->
                     <div id="data-step1" class="items-step1 product-slider-main position-r selected" data-temp="tabdata">                      
                     {% for product in products %}
+                    
                       <div class="col-lg-3 col-sm-4 col-xs-6 plr-20 mb-30">
                         <div class="product-item">
                           <div class="sale-label"><span>Sale</span></div>
                           <div class="product-image"> 
                             <a href="{{product.get_absolute_url }}"></a> 
-                            <img src="{% if product.image %}{{product.image.url}}{% else %}{% static "images\no_images.png" %}{% endif %}" alt="Empire"> 
+                          
+                           {% get_main_image %}
                           </div>
                           <div class="product-item-details align-center">
                             <div class="rating-summary-block">
@@ -69,24 +71,6 @@
               </div>
             </div>
         </div>
-        {% block domready %}
-        $('a.like').click(function(e){
-          e.preventDefault();
-          $.post('{% url "shop:like" %}',
-          {id:$(this).data('id'),
-        action:$(this).data('action')
-        },
-        fuction(data){
-          if (data['status'] == 'ok')
-          {
-            var previous_action=$('a.like').data('action');
-            $('a.like').data('action',previous_action=='like' ? 'unlike' : 'like');
-            $('a.like').text('action',previous_action=='like' ? 'unlike' : 'Like');
-          }
-        }
-        );
         
-          });
-          {% endblock %}
         {% include "pagination.html" with page=products %}
 {% endblock %}

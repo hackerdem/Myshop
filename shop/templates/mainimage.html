@@ -1,0 +1,5 @@
+{% load staticfiles %}
+{% load product_group_tags %}
+{% for img in image %}
+<img src="{% if img %}{{img.get_absolute_url}}{% else %}{% static "images\no_image.png" %}{% endif %}" alt="Empire"> 
+{% endfor %}
