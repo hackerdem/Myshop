@@ -17,12 +17,10 @@ def show_menu(context):
 def show_images(context):
     product=context['product']
     images=Image.objects.filter(product=product)
-    print(images)
     return {'imagest':images}
 
 @register.inclusion_tag('mainimage.html',takes_context=True)
 def get_main_image(context):
     product=context['product']
     image=Image.objects.filter(product=product).filter(main_image=True)
-    print(image)
     return {'image':image}
