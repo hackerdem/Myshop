@@ -1,9 +1,10 @@
-from django.shortcuts import render,redirect,get_object_or_404
+from django.shortcuts import render,redirect,get_object_or_404,HttpResponse
 from django.views.decorators.http import require_POST
 from shop.models import Product
 from .cart import Cart
 from .forms import CartAddProductForm
 from coupons.forms import CouponApplyForm
+from shop.templatetags import cart_update_tags
 
 
 @require_POST
@@ -17,6 +18,7 @@ def cart_add(request,product_id):
                  quantity=1,# fix this later this should be defined in the model as default instead of writing here
                  update_quantity=cd['update'])
     return redirect('cart:cart_detail')
+    #return HttpResponse(status=204)
 
 def cart_remove(request,product_id):
     cart=Cart(request)

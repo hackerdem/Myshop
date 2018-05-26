@@ -603,7 +603,6 @@ header#header.header-fixed {
 	background-position: -58px -240px;
 	position: relative;
 }
-
 .header-right-link ul li.account-icon:hover > a span {
 	background-position: -12px -204px;
 }

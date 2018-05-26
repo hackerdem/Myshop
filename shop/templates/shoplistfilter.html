@@ -1,4 +1,5 @@
 {% load staticfiles%}
+<form id='filterFormId' action='GET'>
 
 <div class="sidebar-box listing-box mb-40"> <span class="opener plus"></span>
     <div class="sidebar-title">
@@ -59,5 +60,6 @@
         </ul>
       </div>
       
-      <a href="#" class="btn btn-color">Refine</a> </div>
+      <a href="javascript:{}" onclick="document.getElementById('filterFormId').submit();" class="btn btn-color">Refine</a> </div>
   </div>
+</form>

@@ -14,15 +14,16 @@
           {% with product=item.product %}
         <li>
           <a class="close-cart">
+            
             <i class="fa fa-times-circle"></i>
           </a>
           <div class="media">
             <a class="pull-left">
-              <img alt="Empire" src="{{ product.image.url }}">
+              <img alt="Empire" src="{{ image.image.url }}">
             </a>
             <div class="media-body">
               <span>
-                <a> {{ product.name }}</a>
+                <a> {{ product.name|truncatechars:15 }}</a>
               </span>
               <p class="cart-price">${{ product.price }}</p>
               <div class="product-qty">
