@@ -52,8 +52,18 @@ INSTALLED_APPS = (
     'paypal.standard.ipn',
     'payment',
     'coupons',
+    'contact',
+    'haystack',
   
 )
+
+HAYSTACK_CONNECTIONS = {
+'default': {
+'ENGINE': 'haystack.backends.solr_backend.SolrEngine',
+'URL': 'http://127.0.0.1:3333/solr/myshop'
+},
+}
+
 AUTHENTICATION_BACKENDS=(
     'django.contrib.auth.backends.ModelBackend',
     'social_core.backends.facebook.FacebookOAuth2',
@@ -71,12 +81,11 @@ SOCIAL_AUTH_FACEBOOK_SECRET = FACEBOOK_SECRET
 SOCIAL_AUTH_FACEBOOK_SCOPE = ['email','public_profile']
 
 LOGIN_REDIRECT_URL = 'https://artsshop.herokuapp.com/'
-MIDDLEWARE_CLASSES = (
+MIDDLEWARE= (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',

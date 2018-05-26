@@ -16,20 +16,23 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 from django.conf import settings
+from django.shortcuts import render
 from django.conf.urls.static import static
-urlpatterns = [
+handler404 = 'my_app.views.handler404'
 
+urlpatterns = [
+    url(r'^aboutus/',lambda request: render(request,'aboutus.html')),
+    url(r'^contact/',include('contact.urls',namespace='contact')),
     url(r'^paypal/',include('paypal.standard.ipn.urls')),
     url(r'^payment/',include('payment.urls',namespace='payment')),
-    url(r'^adminosmagnificos/', include(admin.site.urls)),
     url(r'^cart/',include('cart.urls',namespace='cart')),
     url(r'^account/',include('account.urls',namespace='account')),
     url(r'^coupons/',include('coupons.urls',namespace='coupons')),
     url(r'^shop/',include('shop.urls',namespace='shop')),
     url('social-auth/',include('social.apps.django_app.urls',namespace='social')),
-    url(r'^',include('shop.urls',namespace='shop')),
+    url(r'^',include('shop.urls',namespace='shop')),#fix this later shop namespace in two urls
     url(r'^purchases/',include('purchases.urls',namespace='purchases')),
-    
+    url(r'^adminosmagnificos/',admin.site.urls),
 ]
 if settings.DEBUG==True:
     urlpatterns+=static(settings.MEDIA_URL,

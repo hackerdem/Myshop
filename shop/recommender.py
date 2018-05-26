@@ -14,8 +14,8 @@ class Recommender(object):
         products_ids=[p.id for p in products]
         for product_id in product_ids:
             for with_id in product_ids:# get the other products bought with each product
-            if product_id!=with_id:
-                r.zincrby(self.get_product_key(product_id),with_id,amount=1)
+                if product_id!=with_id:
+                    r.zincrby(self.get_product_key(product_id),with_id,amount=1)
 
     def suggest_products_for(self,products,max_results=6):
         product_ids=[p.id for p in products]
@@ -25,4 +25,19 @@ class Recommender(object):
             #generete a temporary key
             flat_ids=''.join([str(id) for id in product_ids])
             tmp_key='tmp_{}'.format(flat_ids)
-            
+            #multiple products,combine scores of all products
+            #store the resulting sorted set in a temporary key
+            keys=[self.get_product_key(id) for id in product_ids]
+            r.zunionstore(tmp_key,keys)
+            #remove ids for the products the recommendation is for
+            r.zrem(tmp_key,*product_ids)
+            #get the product ids by their score,decendant sort
+            suggestions=r.zrange(tmp_key,0.-1,desc=True)[:max_results]
+            #remove the temporary key
+            r.delete(tmp_key)
+        suggested_products_ids=[int(id) for id in suggestions]
+        #get suggested products and sort by order of appearance
+        suggested_products=list(Product.objects.filter(id__in=suggested_products_ids))
+        suggested_products.sort(key=lambda x: suggested_products_ids.index(x.id))
+        return suggested_products
+

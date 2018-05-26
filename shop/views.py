@@ -1,11 +1,24 @@
 from django.shortcuts import render,get_object_or_404
-from .models import Product,Size,Color,Room,Category,Image
+from .models import Product,Size,Color,Room,Category,Image,Wishlist
 from cart.forms import CartAddProductForm
-from django.http import HttpResponse
+from django.http import HttpResponse,HttpResponseRedirect
 from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
 from cart.cart import Cart
 from django.http import JsonResponse
 from django.views.decorators.http import require_POST
+from django.shortcuts import render_to_response
+from django.template import RequestContext
+from .forms import ProductAddWishlistForm
+from .forms import SearchForm
+from haystack.query import SearchQuerySet
+
+
+#404 error handling
+###########################
+def handler404(request, exception, template_name='404.html'):
+    response=render_to_response('404.html',{},context_instance=RequestContext(request))
+    response.status_code=404
+    return response
 
 @require_POST
 def product_liked(request):
@@ -115,3 +128,37 @@ def product_liked_by_user(request):
             product=Product.objects.get(id=product_id)
             if action=='like':
                 product."""
+@require_POST
+def add_to_wishlist(request,product_id):
+    if request.user.is_authenticated:
+        existing_object=Wishlist.objects.filter(userid=request.user.id,productid=product_id)
+        if not existing_object :
+            new_wishlist_object=Wishlist()
+
+            new_wishlist_object.save()
+            new_wishlist_object.userid.add(request.user)
+            new_wishlist_object.productid.add(product_id)
+
+        else:
+            existing_object.delete()
+        return HttpResponse(status=204)
+
+    else:
+        return HttpResponse(status=204) #processed but returning content is unnecessary
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+    def post_search(request):
+        form=SearchForm()
+        if query in request.GET:
+            form=SearchForm(request.GET)
+            if form.is_valid():
+                cd=form.cleaned_data
+                results=SearchQuerySet().models(Product).filter(content=cd['query']).load_all()
+                total_results=results.count()
+        return render(request,
+                    'shop/templates/search/search.html',
+                    {'form':form,
+                    'cd':cd,
+                    'results':results,
+                    'total_Results':total_results})
+

@@ -1,0 +1,63 @@
+{% load staticfiles%}
+
+<div class="sidebar-box listing-box mb-40"> <span class="opener plus"></span>
+    <div class="sidebar-title">
+        <h3>Categories</h3> <span></span>
+      </div>
+    <div class="sidebar-contant">
+      <ul>
+          {% for category in features.category %}
+          <li class="list-group-item">
+              <div class="material-switch pull-right">
+                  <input id="{{ category.name }}" name="someSwitchOption001" type="checkbox"/>
+                  <label for="someSwitchOptionWarning" class="label-warning"></label>
+              </div>
+              {{ category.name }}
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+  <div class="sidebar-box mb-40"> <span class="opener plus"></span>
+    <div class="sidebar-title">
+      <h3>Shop by</h3> <span></span>
+    </div>
+    <div class="sidebar-contant">
+      <div class="price-range mb-30">
+        <div class="inner-title">Price range</div>
+        <input class="price-txt" type="text" id="amount">
+        <div id="slider-range"></div>
+      </div>
+      <div class="size mb-20">
+        <div class="inner-title">Size</div>
+
+        <ul >
+          {% for size in features.size %}
+          <!-- for this li group css formatting is not working and all deleted-->
+          <li class="list-group-item">
+              <div class="material-switch pull-right">
+                  <input id="{{ size.name }}" name="someSwitchOption001" type="checkbox"/>
+                  <label for="someSwitchOptionWarning" class="label-warning"></label>
+              </div>
+              {{ size.name }}
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+      <div class="mb-20">
+        <div class="inner-title">Color</div>
+        <ul>
+          {% for color in features.color %}
+          <li class="list-group-item">
+              <div class="material-switch pull-right">
+                  <input id="{{ color.name }}" name="someSwitchOption001" type="checkbox"/>
+                  <label for="someSwitchOptionWarning" class="label-warning"></label>
+              </div>
+              {{ color.name }}
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+      
+      <a href="#" class="btn btn-color">Refine</a> </div>
+  </div>

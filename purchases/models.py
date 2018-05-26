@@ -5,7 +5,7 @@ from django.core.validators import MinValueValidator,MaxValueValidator
 from coupons.models import Coupon
 
 class Purchase(models.Model):
-    coupon=models.ForeignKey(Coupon,related_name='purchases',null=True,blank=True)
+    coupon=models.ForeignKey(Coupon,related_name='purchases',null=True,blank=True,on_delete='CASCADE')
     discount=models.IntegerField(default=0,validators=[MinValueValidator(0),MaxValueValidator(100)])
     shipping_first_name=models.CharField(max_length=50,blank=False,null=False)
     shipping_last_name=models.CharField(max_length=50,blank=False,null=False)
@@ -43,8 +43,8 @@ class Purchase(models.Model):
         return total_cost-total_cost*(self.discount/Decimal('100'))
 
 class PurchaseItem(models.Model):
-    purchase=models.ForeignKey(Purchase,related_name='items')
-    product=models.ForeignKey(Product,related_name='purchase_items')
+    purchase=models.ForeignKey(Purchase,related_name='items',on_delete='CASCADE')
+    product=models.ForeignKey(Product,related_name='purchase_items',on_delete='CASCADE')
     price=models.DecimalField(max_digits=10,decimal_places=2)
     quantity=models.PositiveIntegerField(default=1)
 

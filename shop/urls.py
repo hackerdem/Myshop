@@ -3,8 +3,9 @@ from django.conf.urls import url
 
 from . import views
 
+app_name='shop'
 urlpatterns=[
-    url(r'^like/$',views.product_liked,name='like'),
+    url(r'^add_to_wishlist/(?P<product_id>\d+)/$',views.add_to_wishlist,name='add_to_wishlist'),
     url(r'^filter/(?P<slug>[-\w]+)/$',views.size_color_room_filter,name='size_color_room_filter'),
     url(r'^latest/$',views.product_latest,name='product_latest'),
     url(r'^all/$',views.product_list,name='product_list'),

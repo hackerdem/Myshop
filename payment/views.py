@@ -1,5 +1,5 @@
 from django.shortcuts import render,get_object_or_404
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from decimal import Decimal
 from django.conf import settings
 from paypal.standard.forms import PayPalPaymentsForm

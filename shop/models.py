@@ -1,7 +1,8 @@
 from django.db import models
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.template.defaultfilters import slugify
 from django.conf import settings
+from authentication.models import User
 
 class Category(models.Model):
     name=models.CharField(max_length=200,primary_key=True,
@@ -69,10 +70,10 @@ class Color(models.Model):
 
 
 class Product(models.Model):
-    category=models.ForeignKey(Category,blank=False,null=False,related_name='products')
-    size=models.ForeignKey(Size,blank=False,null=False,related_name='products')
-    color=models.ForeignKey(Color,blank=False,null=False,related_name='products')
-    room=models.ForeignKey(Room,blank=False,null=False,related_name='products')
+    category=models.ForeignKey(Category,blank=False,null=False,related_name='products',on_delete='CASCADE')
+    size=models.ForeignKey(Size,blank=False,null=False,related_name='products',on_delete='CASCADE')
+    color=models.ForeignKey(Color,blank=False,null=False,related_name='products',on_delete='CASCADE')
+    room=models.ForeignKey(Room,blank=False,null=False,related_name='products',on_delete='CASCADE')
     name=models.CharField(blank=False,null=False,max_length=200,db_index=True)
     slug=models.SlugField(max_length=200,db_index=True,unique=True)
     price=models.DecimalField(max_digits=10,decimal_places=2)
@@ -110,3 +111,17 @@ class Image(models.Model):
 
     def get_absolute_url(self):
         return "{0}".format(self.image.url)
+
+class WishManager(models.Manager):
+    def create_wish(self,user,product):
+        wishlist_item=self.create(user,product)
+        return wishlist_item
+
+class Wishlist(models.Model):
+    wish_id=models.AutoField(primary_key=True)
+    userid=models.ManyToManyField(User,related_name='userid')
+    productid=models.ManyToManyField(Product,related_name='productid')
+    created=models.DateField(auto_now_add=True)#delete this default later
+    objects=WishManager()
+    def get_absolute_url(self):
+        return self.product.url

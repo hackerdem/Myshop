@@ -68,7 +68,15 @@
               {% block cart %}
               {% include 'cart.html' %}
               {% endblock %}
-              
+              <li class="cart-icon">
+                  <a href="#">
+                    <span>
+                      <small class="cart-notification">
+                        
+                      
+                      </small>
+                    </span>
+                  </a></li>
             </ul>
           </div>
           <!-- HEADER TOGGLE BUTTON START-->
@@ -124,12 +132,8 @@
                 
                 <li class="level dropdown">
                   <span class="opener plus"></span>
-                  <a href="/contact.html">Contact</a>
-                  <div class="megamenu mobile-sub-menu">
-                    <div class="megamenu-inner-top">
-                      
-                    </div>
-                  </div>
+                  <a href="/contact/">Contact</a>
+                  
                 </li>
                 <li class="level">
                   <a href="cart.html">Artists</a>
@@ -145,7 +149,7 @@
                             <li class="level3"><a href="about.html">About Us</a></li>
                             <li class="level3"><a href="product-page.html">Product</a></li>
                             <li class="level3"><a href="{% url "purchases:purchase_create" %}">Checkout</a></li>
-                            <li class="level3"><a href="contact.html">Contact</a></li>
+                            <li class="level3"><a href="contact">Contact</a></li>
                             <li class="level3"><a href="404.html">404 Error</a></li>
                           </ul>
                         </li>

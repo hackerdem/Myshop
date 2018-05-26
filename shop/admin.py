@@ -2,6 +2,8 @@ from django.contrib import admin
 from .models import Product,Room,Image,Size,Color,Category
 from account.models import UserActivation
 
+
+
 class CategoryAdmin(admin.ModelAdmin):
     list_display=['name','slug']
     prepopulated_fields={'slug':('name',)}

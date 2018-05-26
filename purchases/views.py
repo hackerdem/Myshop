@@ -5,7 +5,7 @@ from cart.cart import Cart
 from django.contrib.auth.decorators import login_required
 from account.views import user_login
 from .tasks import purchase_created
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.contrib.admin.views.decorators import staff_member_required
 from django.shortcuts import get_object_or_404
 from .models import Purchase

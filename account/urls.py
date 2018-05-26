@@ -1,6 +1,6 @@
 from django.conf.urls import url
 from . import views
-
+app_name='account'
 urlpatterns=[
     url(r'^dashboard/$',views.user_dashboard,name='user_dashboard'),
     url(r'^login/$',views.user_login,name='login'),

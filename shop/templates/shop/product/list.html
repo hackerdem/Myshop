@@ -42,7 +42,7 @@
                             <div class="rating-summary-block">
                               <div title="53%" class="rating-result"> <span style="width:53%"></span> </div>
                             </div>
-                            <div class="product-item-name"> <a href="product-page.html">{{product.name}}</a> </div>
+                            <div class="product-item-name"> <a href="{{product.get_absolute_url }}">{{product.name}}</a> </div>
                             <div class="price-box"> <span class="price">${{ product.price }}</span> <del class="price old-price">$100.00</del> </div>
                           </div>
                           <div class="product-detail-inner align-center">
@@ -50,22 +50,28 @@
                               <ul>
                                 <li class="pro-cart-icon">
                                   <form id='{{product.name}}' action="{% url "cart:cart_add" product.id %}" method="post">
-                                      {% with users_like=product.users_like.all %}
-                                      {{ cart_product_form }}
+                                      
+                              
                                       {% csrf_token %}
                                       <a href="javascript:{}" onclick="document.getElementById('{{product.name}}').submit();"></a>
                                       </form>
                                     </li>
-                                <li class="pro-wishlist-icon"><a href="#" data-id="{product.id}" data-action="{% if request.user in users_like %}un{% endif %}like">
+                                <li class="pro-wishlist-icon">
+                                  <form id='w-{{product.name}}' action="{% url "shop:add_to_wishlist" product.id %}" method="post">
+                    
+                                    {% csrf_token %}
+                                    <a href="javascript:{}" onclick="document.getElementById('w-{{product.name}}').submit();"></a>
+                                    </form>  
                                     
-                                </a></li>
+                                </li>
+                                
                               </ul>
                             </div>
                           </div>
                         </div>
                       </div>
 
-                      {% endwith %}
+                    
                       {% endfor %}
                     </div>
               </div>

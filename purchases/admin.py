@@ -3,7 +3,7 @@ from .models import Purchase,PurchaseItem
 import csv
 import datetime
 from django.http import HttpResponse
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 
 def order_pdf(obj):
     return '<a href="{}">PDF</a>'.format(reverse('purchases:admin_order_pdf',args=[obj.id]))

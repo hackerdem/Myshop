@@ -8,8 +8,8 @@ from django.contrib.auth import get_user_model
 from datetime import datetime
 
 class Profile(models.Model):
-    username=models.ForeignKey(User,to_field='email',related_name='username')
-    first_name=models.TextField(_('First name'),default='ErdemDefault',max_length=128,blank=False)
+    username=models.ForeignKey(User,to_field='email',related_name='username',on_delete='CASCADE')
+    first_name=models.TextField(_('First name'),default='ErdemDefault',max_length=64,blank=False)
     avatar=models.ImageField(upload_to='static/images/avatars',default='/static/images/avatar.png')
     surname=models.TextField(_('Family name'),max_length=128,blank=False)
     created=models.DateTimeField(auto_now_add=True,db_index=True)
@@ -27,6 +27,6 @@ class Profile(models.Model):
         return self.username
 
 class UserActivation(models.Model):
-    user=models.ForeignKey(User)
+    user=models.ForeignKey(User,on_delete='CASCADE')
     access_token=models.CharField(max_length=100)
-    expire_date=models.DateTimeField(default=datetime.now())
+    expire_date=models.CharField(max_length=20,default='12/12/2018')
