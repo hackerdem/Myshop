@@ -2,6 +2,7 @@
 {% load static %}
 {% load product_group_tags %}
 {% block content %}
+
 <section class="ptb-95">
     <div class="container">
       <!-- PRODUCT-LISTING MAIN CLASS START -->
@@ -53,7 +54,7 @@
                                       
                               
                                       {% csrf_token %}
-                                      <a href="javascript:{}" onclick="document.getElementById('{{product.name}}').submit();"></a>
+                                      <a href="javascript:{}" onclick="document.getElementById('{{product.name}}').submit()"></a>
                                       </form>
                                     </li>
                                 <li class="pro-wishlist-icon">
@@ -79,4 +80,5 @@
         </div>
         
         {% include "pagination.html" with page=products %}
+  
 {% endblock %}
