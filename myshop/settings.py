@@ -20,7 +20,7 @@ from .settings_data import SECRET,FACEBOOK_KEY,FACEBOOK_SECRET, \
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-DATABASES={'default':dj_database_url.config(conn_max_age=600)}
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
 
@@ -124,7 +124,7 @@ DATABASES = {
     }
 }
 """
-"""DATABASES = {
+DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'myshop',
@@ -133,8 +133,8 @@ DATABASES = {
         'HOST': '127.0.0.1',
         'PORT': '5432',
     }
-}"""
-
+}
+DATABASES['default']=dj_database_url.config(conn_max_age=600,ssl_require=True)
 
 
 # Internationalization
