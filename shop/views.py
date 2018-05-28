@@ -10,7 +10,7 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from .forms import ProductAddWishlistForm
 from .forms import SearchForm
-from haystack.query import SearchQuerySet
+
 
 
 #404 error handling
