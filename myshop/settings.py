@@ -53,7 +53,7 @@ INSTALLED_APPS = (
     'payment',
     'coupons',
     'contact',
-    'haystack',
+ 
   
 )
 

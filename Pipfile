@@ -9,6 +9,7 @@ verify_ssl = true
 python_version = "3.5"
 
 [packages]
+haystack = "==0.42"
 actions = "==1.0.3"
 bunch = "==1.0.1"
 certifi = "==2018.4.16"
