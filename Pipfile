@@ -9,6 +9,7 @@ verify_ssl = true
 python_version = "3.5"
 
 [packages]
+psycopg2 = "==2.7.4"
 haystack = "==0.42"
 actions = "==1.0.3"
 bunch = "==1.0.1"
