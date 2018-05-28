@@ -30,7 +30,7 @@ SECRET_KEY =SECRET
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['artsshop.herokuapp.com','127.0.0.1']
 SESSION_EXPIRE_AT_BROWSER_CLOSE=True
 
 # Application definition
