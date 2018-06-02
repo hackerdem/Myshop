@@ -1,10 +1,11 @@
-<li class="cart-icon">
+
+    
     <a href="#">
       <span>
-        <small class="cart-notification">
-          
+        <small  class="cart-notification">
+          <div id='cartSize'>
           {% if cart|length == 0 %}{{':('}}{% else %}{{ cart|length }}{% endif %}
-        </small>
+        </div></small>
       </span>
     </a>
     <div class="header-link-dropdown cart-dropdown">
@@ -12,6 +13,7 @@
         {% if cart|length > 0 %}
           {% for item in cart %}
           {% with product=item.product %}
+          
         <li>
           <a class="close-cart">
             
@@ -19,7 +21,7 @@
           </a>
           <div class="media">
             <a class="pull-left">
-              <img alt="Empire" src="{{ image.image.url }}">
+              <img alt="Empire" src="{{ product.image.image.url }}">
             </a>
             <div class="media-body">
               <span>
@@ -35,6 +37,7 @@
             </div>
           </div>
         </li>
+        
         {% endwith %}
     {% endfor %}
       </ul>
@@ -55,4 +58,4 @@
     {% endif %}
       
     </div>
-  </li>
+  

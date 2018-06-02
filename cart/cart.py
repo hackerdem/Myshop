@@ -1,6 +1,6 @@
 from decimal import Decimal
 from django.conf import settings
-from shop.models import Product
+from shop.models import Product,Image
 from coupons.models import Coupon
 
 
@@ -22,8 +22,11 @@ class Cart(object):
         """
         add a product to the cart or update its quantity
         """
+        
+        
         product_id=str(product.id)
         if product_id not in self.cart:
+            
             self.cart[product_id]={'quantity':0,'price':str(product.price)}
         if update_quantity:
         
@@ -58,7 +61,10 @@ class Cart(object):
         
         products=Product.objects.filter(id__in=product_ids)
         for product in products:
+            image=Image.objects.filter(product=product).filter(main_image=True).values()
+            print()
             self.cart[str(product.id)]['product']=product
+            self.cart[str(product.id)]['image']=image
         for item in self.cart.values():
             item['price']=Decimal(item['price'])
             item['total_price']=item['price']*item['quantity']

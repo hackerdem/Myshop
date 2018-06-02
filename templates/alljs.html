@@ -15,7 +15,32 @@
         window.location.href =param;
       }
   </script>
+  <script>
+      $(document).ready(function(){
+      {% block domready %}
+      {% endblock %}
+      });
+      </script>
+  <script>
+    
+    function addToCart(productId){
+      //document.getElementById(productName).submit();
+  
+      
+$.ajax({
+  type:"POST",
+  url:'{% url "cart:cart_add_ajax" %}',
+  data:{csrfmiddlewaretoken:'{{ csrf_token }}','product_id':productId},
+  success: function() {
+    $('#cartSize').load(' #cartSize');
+  }
+  
+  //success:window.alert('r')
+})
 
+     }
+    
+  </script>
   <script>
     function SetBilling(){
       var i;

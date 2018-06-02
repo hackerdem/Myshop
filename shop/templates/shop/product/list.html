@@ -54,7 +54,7 @@
                                       
                               
                                       {% csrf_token %}
-                                      <a href="javascript:{}" onclick="document.getElementById('{{product.name}}').submit()"></a>
+                                      <a href="javascript:{}" onclick="addToCart('{{product.id}}')"></a>
                                       </form>
                                     </li>
                                 <li class="pro-wishlist-icon">

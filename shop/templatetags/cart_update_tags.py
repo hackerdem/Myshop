@@ -8,4 +8,7 @@ register=template.Library()
 def show_cart(context):
     request = context['request']
     cart=Cart(request)
-    return {'cart':cart,'product':request}
+    for item in cart:
+        #item['image']=Image.objects.filter(product=cart.item['product']).filter(main_image=True)
+        print(item)
+    return {'cart':cart,}
