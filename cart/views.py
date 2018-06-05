@@ -6,8 +6,8 @@ from .forms import CartAddProductForm
 from coupons.forms import CouponApplyForm
 from shop.templatetags import cart_update_tags
 from django.http import JsonResponse
-
-
+from django.template import RequestContext
+import json
 
 @require_POST
 def cart_add(request,product_id):
@@ -50,3 +50,14 @@ def carttotal(request):
     cart=Cart(request)
     print(cart)
     return cart
+
+def product_custom_filter(request):
+    #request_csrf_token = request.POST.get('csrfmiddlewaretoken', '')
+    request_getdata = request.POST.get('form', None) 
+    context=RequestContext(request)
+    products=context['products']
+    for i in json.loads(request_getdata):
+        if i['value']=='on':print('as')
+    #filtered_products=Product.objects.filter(product=product).filter(color='blue')
+    print('filtered_products')   
+    return HttpResponse('ok')

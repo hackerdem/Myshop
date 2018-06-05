@@ -1,0 +1,83 @@
+{% load product_group_tags %}
+<div id='productsListedRow' class="product-listing list-type">
+    {% for product in products %}
+  <div class="row">
+    
+    <div class="col-lg-6 col-sm-12">
+      <div class="shop-list-view">
+        <div class="product-item col-sm-6">
+          <div class="product-image">
+            <a href="{{product.get_absolute_url }}"></a>
+            {% get_main_image %}
+          </div>
+        </div>
+        <div class="product-item-details col-sm-8">
+          <div class="product-item-name"> <a href="product-page.html">{{product.name}}</a> </div>
+          <div class="rating-summary-block">
+            <div title="53%" class="rating-result"> <span style="width:53%"></span> </div>
+          </div>
+          <div class="price-box"> <span class="price">${{ product.price }}</span> <del class="price old-price">$100.00</del> </div>
+          <p align='justify'>{{product.description | truncatechars:255 }}</p>
+          <div class="bottom-detail">
+            <ul>
+              <li class="pro-cart-icon">
+                <form id='{{product.name}}' action="{% url "cart:cart_add" product.id %}" method="post">
+                  {% csrf_token %}
+                  <button href="javascript:{}" onclick="addToCart('{{product.id}}')" title="Add to Cart"><span></span></button>
+                </form>
+                
+              </li>
+              
+              <li class="pro-wishlist-icon"><a href="#"><span></span></a></li>
+              <li class="pro-compare-icon"><a href="#"><span></span></a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+  {% include "pagination.html" with page=products %}
+  {% endfor %}
+</div>
+<div id='productsListedColumn' class="product-listing" style="display:none">
+  <div class="inner-listing">
+    <div class="row mlr_-20">
+        {% for product in products %}
+      <div class="col-md-4 col-xs-6 plr-20 mb-30">
+        <div class="product-item">
+          <div class="new-label"><span>New</span></div>
+          <div class="product-image"> 
+            <a href="{{product.get_absolute_url }}"></a> 
+            {% get_main_image %} 
+          </div>
+          <div class="product-item-details align-center">
+            <div class="rating-summary-block">
+              <div title="53%" class="rating-result"> <span style="width:53%"></span> </div>
+            </div>
+            <div class="product-item-name"> <a href="product-page.html">{{product.name}}</a> </div>
+            <div class="price-box"> <span class="price">${{product.price}}</span> <del class="price old-price">$100.00</del> </div>
+          </div>
+          <div class="product-detail-inner align-center">
+            <div class="detail-inner-left">
+                <ul>
+                    <li class="pro-cart-icon">
+                      <form id='{{product.name}}' action="{% url "cart:cart_add" product.id %}" method="post">
+                        {% csrf_token %}
+                        <button href="javascript:{}" onclick="addToCart('{{product.id}}')" title="Add to Cart"><span></span></button>
+                      </form>
+                      
+                    </li>
+                    
+                    <li class="pro-wishlist-icon"><a href="#"><span></span></a></li>
+                    <li class="pro-compare-icon"><a href="#"><span></span></a></li>
+                  </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+</div>

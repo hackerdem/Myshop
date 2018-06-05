@@ -21,6 +21,43 @@
       {% endblock %}
       });
       </script>
+      <script>
+          function changeListingStyle(option){
+            if (option=='listOption1'){
+              $("#listOption1").addClass('active');
+              $("#listOption2").removeClass('active');
+              $("#productsListedRow").hide();
+              $("#productsListedColumn").show();
+            }else{
+              $("#listOption2").addClass('active');
+              $("#listOption1").removeClass('active');
+              $("#productsListedColumn").hide();
+              $("#productsListedRow").show();
+            }
+
+        }
+      </script>
+        <script>
+    
+        function filterProducts(form){
+          //document.getElementById(productName).submit();
+          var form=JSON.stringify($('form').serializeArray())         
+          
+          
+    $.ajax({
+      type:"POST",
+      url:'{% url "cart:product_custom_filter" %}',
+      data:{form:form,csrfmiddlewaretoken:'{{ csrf_token }}'},
+      success: function() {
+         
+      }
+     
+      //success:window.alert('r')
+    })
+    
+         }
+        
+      </script>
   <script>
     
     function addToCart(productId){
@@ -41,6 +78,7 @@ $.ajax({
      }
     
   </script>
+
   <script>
     function SetBilling(){
       var i;

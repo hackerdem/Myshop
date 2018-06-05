@@ -182,6 +182,7 @@ $(function() {
       $("#tabs li a , .tab_content li div").removeClass("selected")
       $(".tab-"+title +", .items-"+title).addClass("selected")
       $("#items").attr("class","tab-"+title);
+
       return false;
     });
   }

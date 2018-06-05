@@ -1,6 +1,6 @@
 {% load staticfiles%}
-<form id='filterFormId' action='GET'>
-
+<form id='filterFormId' action='POST'>
+  
 <div class="sidebar-box listing-box mb-40"> <span class="opener plus"></span>
     <div class="sidebar-title">
         <h3>Categories</h3> <span></span>
@@ -10,7 +10,7 @@
           {% for category in features.category %}
           <li class="list-group-item">
               <div class="material-switch pull-right">
-                  <input id="{{ category.name }}" name="someSwitchOption001" type="checkbox"/>
+                  <input id="{{ category.name }}" name="{{ category.name }}" type="checkbox"/>
                   <label for="someSwitchOptionWarning" class="label-warning"></label>
               </div>
               {{ category.name }}
@@ -37,7 +37,7 @@
           <!-- for this li group css formatting is not working and all deleted-->
           <li class="list-group-item">
               <div class="material-switch pull-right">
-                  <input id="{{ size.name }}" name="someSwitchOption001" type="checkbox"/>
+                  <input id="{{ size.name }}" name="{{ size.name }}" type="checkbox"/>
                   <label for="someSwitchOptionWarning" class="label-warning"></label>
               </div>
               {{ size.name }}
@@ -51,7 +51,7 @@
           {% for color in features.color %}
           <li class="list-group-item">
               <div class="material-switch pull-right">
-                  <input id="{{ color.name }}" name="someSwitchOption001" type="checkbox"/>
+                  <input id="{{ color.name }}" name="{{ color.name }}" type="checkbox"/>
                   <label for="someSwitchOptionWarning" class="label-warning"></label>
               </div>
               {{ color.name }}
@@ -59,7 +59,6 @@
           {% endfor %}
         </ul>
       </div>
-      
-      <a href="javascript:{}" onclick="document.getElementById('filterFormId').submit();" class="btn btn-color">Refine</a> </div>
+    </form>
+      <a href="javascript:{}" onclick="filterProducts(document.getElementById('filterFormId'));" class="btn btn-color">Refine</a> </div>
   </div>
-</form>

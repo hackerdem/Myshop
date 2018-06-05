@@ -1,5 +1,5 @@
 from django import template
-from shop.models import Color,Size,Room,Category,Image
+from shop.models import Color,Size,Room,Category,Image,Product
 register=template.Library()
 
 
@@ -31,3 +31,13 @@ def get_filter_features(context):
     features=context['features']
     
     return {'features':features}
+
+@register.inclusion_tag('product_list_filtered.html',takes_context=True)
+def imply_filter_to_products(context):
+    products=Product.objects.all()
+    pro=context['products']
+    print(pro)
+
+    
+    
+    return {'products':products}

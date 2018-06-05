@@ -603,6 +603,7 @@ header#header.header-fixed {
 	background-position: -58px -240px;
 	position: relative;
 }
+
 .header-right-link ul li.account-icon:hover > a span {
 	background-position: -12px -204px;
 }
@@ -2788,26 +2789,3 @@ ul.tagcloud li a:hover {
 	cursor: pointer;
 }
 /* Scroll-top Arrow CSS End */
-
-/*_______________________________________________________
-// FOOTER  //----------------------------
-_______________________________________________________*/
-
-input.hidden {
-    position: absolute;
-    left: -9999px;
-}
-
-#profile-image1 {
-    cursor: pointer;
-  
-     width: 50px;
-    height: 50px;
-	border:2px solid #03b1ce ;}
-	.tital{ font-size:16px; font-weight:500;}
-	 .bot-border{ border-bottom:1px #f8f8f8 solid;  margin:5px 0  5px 0}
-
-/*_______________________________________________________
-// FOOTER END //----------------------------
-_______________________________________________________*/
-

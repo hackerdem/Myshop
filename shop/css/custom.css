@@ -603,9 +603,26 @@ header#header.header-fixed {
 	background-position: -58px -240px;
 	position: relative;
 }
+.header-right-link ul li.wishlist-icon > a span {
+	background-position: -58px -240px;
+	position: relative;
+}
+
 
 .header-right-link ul li.account-icon:hover > a span {
 	background-position: -12px -204px;
+}
+.header-right-link ul li.wishlist-icon > a span small.cart-notification {
+	background: transparent;
+	color: #6201ff;
+	height: 15px;
+	line-height: 13px;
+	position: absolute;
+	right: -2px;
+	text-align: center;
+	top: 0;
+	width: 15px;
+	font-weight: 500;
 }
 
 .header-right-link ul li.cart-icon > a span small.cart-notification {

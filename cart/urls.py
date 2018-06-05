@@ -7,5 +7,6 @@ urlpatterns=[
     url(r'^ajax/',views.cart_add_ajax,name='cart_add_ajax'),
     url(r'^remove/(?P<product_id>\d+)/$',views.cart_remove,name='cart_remove'),
     url(r'^carttotal/$',views.carttotal,name='carttotal'),
+    url(r'^product_custom_filter/$',views.product_custom_filter,name='product_custom_filter'),
 ]
 

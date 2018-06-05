@@ -67,7 +67,7 @@
                           </td>
                           {% endif %}
                         <td><div class="total-price price-box"> <span class="price">${{ item.total_price }}</span> </div></td>
-                        <td><a href="{% url "cart:cart_remove" product.id %}"><i title="Remove Item From Cart" data-id="100" class="fa fa-trash cart-remove-item"></i></td>
+                        <td><a href="{% url "cart:cart_remove" product.id %}" title="Remove Item From Cart"  class="btn btn-danger btn-xs"> <span class="glyphicon glyphicon-remove"></span></td>
                       </tr>
                       {% endwith %}
                       {% endfor %}
