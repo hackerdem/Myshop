@@ -8,11 +8,12 @@
         </div></small>
       </span>
     </a>
-    <div class="header-link-dropdown cart-dropdown">
+    <div id='dropdowncart' class="header-link-dropdown cart-dropdown">
       <ul class="cart-list link-dropdown-list">
         {% if cart|length > 0 %}
           {% for item in cart %}
           {% with product=item.product %}
+          {% with image=product.getimage %}
           
         <li>
           <a class="close-cart">
@@ -21,7 +22,7 @@
           </a>
           <div class="media">
             <a class="pull-left">
-              <img alt="Empire" src="{{ product.image.image.url }}">
+              <img alt="Empire" src="{{ image.image.url }}">
             </a>
             <div class="media-body">
               <span>
@@ -37,7 +38,7 @@
             </div>
           </div>
         </li>
-        
+        {% endwith %}
         {% endwith %}
     {% endfor %}
       </ul>

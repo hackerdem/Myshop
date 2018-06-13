@@ -1,15 +1,12 @@
-from django.shortcuts import render,get_object_or_404
+from django.shortcuts import render,get_object_or_404,render_to_response
 from .models import Product,Size,Color,Room,Category,Image,Wishlist
 from cart.forms import CartAddProductForm
-from django.http import HttpResponse,HttpResponseRedirect
+from django.http import HttpResponse,HttpResponseRedirect,JsonResponse
 from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
-from cart.cart import Cart
-from django.http import JsonResponse
+from cart.cart import Cart 
 from django.views.decorators.http import require_POST
-from django.shortcuts import render_to_response
 from django.template import RequestContext
-from .forms import ProductAddWishlistForm
-from .forms import SearchForm
+from .forms import ProductAddWishlistForm,SearchForm
 
 
 
@@ -22,7 +19,6 @@ def handler404(request, exception, template_name='404.html'):
 
 @require_POST
 def product_liked(request):
-    print("I AM HERE")
     product_id=request.POST.get('id')
     if not request.user.is_authenticated:
         pass # change object attribute later
@@ -40,67 +36,44 @@ def product_liked(request):
                 pass
         return JsonResponse({'status':'ko'})
 
-def size_color_room_filter(request,slug):
-    
-    products=Product.objects.order_by('-{}'.format(slug))
-    products,paginator,features=pagination(request,products)
-    return render(request,'shop/product/list.html',
-                        {'products':products,
-                        'paginator':paginator,
-                        'features':features,
-                        })
-def product_list_by_feature(request,name,slug):
-    cart=Cart(request)
-    products=Product.objects.filter(**{slug:name.capitalize()}).order_by('-stock')
-    products,paginator,features=pagination(request,products)
-    return render(request,'shop/product/list.html',
-                        {'products':products,
-                        'paginator':paginator,
-                        'features':features,
-                        })
-def product_list(request):
-    cart=Cart(request)
-    products=Product.objects.filter(available=True).order_by('-stock')
-    products,paginator,features=pagination(request,products)
-    return render(request,'shop/product/list.html',
-                        {'products':products,
-                        'paginator':paginator,
-                        'features':features,
-                        })
-def product_most_viewed(request):
-    products=Product.objects.filter(available=True).order_by('-number_of_click')
-    products,paginator,features=pagination(request,products)
-    return render(request,'shop/product/list.html',
-                        {'products':products,
-                        'paginator':paginator,
-                        'features':features,
-                        })
-# FEATURED willl be added urls and function
-def product_latest(request):
-    products=Product.objects.order_by('-created')
-    products,paginator,features=pagination(request,products)
-    return render(request,'shop/product/list.html',
-                        {'products':products,
-                        'paginator':paginator,
-                        'features':features,
-                        })
-def collection_shop_list(request):
-    products=Product.objects.filter(available=True).order_by('-stock')
-    products,paginator,features=pagination(request,products)
 
-    return render(request,'shop/product/shop_list.html',
+def product_list(request,**kwargs):
+    filter_parameter='-stock'
+    page='shop/product/list.html'
+    if len(kwargs)==1:
+        filter_parameter='{}'.format(kwargs['slug'])
+
+    elif len(kwargs)>1:
+        name=kwargs['name']
+        slug=kwargs['slug']
+        products=Product.objects.filter(**{slug:name.capitalize()}).order_by(filter_parameter)
+    else:
+        if request.path=='/shop/most_viewed/':
+            filter_parameter='number_of_click'
+        elif request.path=='/shop/latest/':
+            filter_parameter='-created'
+        elif request.path=='/shop/all/':
+            filter_parameter='-stock'
+        elif request.path=='/shop/shop_list/':
+            page='shop/product/shop_list.html'
+    
+        products=Product.objects.filter(available=True).order_by(filter_parameter)
+    products,paginator,features=pagination(request,products)
+    return render(request,page,
                         {'products':products,
                         'paginator':paginator,
                         'features':features,
                         })
-def pagination(request,products):
+
+def pagination(request,products,product_per_page=8):
     colors=Color.objects.all()
     sizes=Size.objects.all()
     rooms=Room.objects.all()
     category=Category.objects.all()
-    paginator=Paginator(products,8)
+    paginator=Paginator(products,product_per_page)
     page=request.GET.get('page')
     features={'color':colors,'room':rooms,'size':sizes,'category':category}
+    filters=None
     try:
         products=paginator.page(page)
     except PageNotAnInteger:
@@ -119,15 +92,7 @@ def product_detail(request,id,slug):
     product.save()
     cart_product_form=CartAddProductForm()
     return render(request,'shop/product/product_detail.html',{'product':product,'cart_product_form':cart_product_form})
-"""@require_POST   
-def product_liked_by_user(request):
-    product_id=request.POST.get('id')
-    action=request.POST.get('action')
-    if product_id and action:
-        try:
-            product=Product.objects.get(id=product_id)
-            if action=='like':
-                product."""
+
 @require_POST
 def add_to_wishlist(request,product_id):
     if request.user.is_authenticated:
@@ -147,18 +112,40 @@ def add_to_wishlist(request,product_id):
         return HttpResponse(status=204) #processed but returning content is unnecessary
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
-    def post_search(request):
-        form=SearchForm()
-        if query in request.GET:
-            form=SearchForm(request.GET)
-            if form.is_valid():
-                cd=form.cleaned_data
-                results=SearchQuerySet().models(Product).filter(content=cd['query']).load_all()
-                total_results=results.count()
-        return render(request,
+
+def show_wishlist(request):
+    
+    user_wishlist=Wishlist.objects.filter(userid=request.user.id)
+    #products=Product.objects.filter(productid__in=)
+    for i in user_wishlist:
+        
+        print(i.getproduct())
+        
+    return render(request,'shop/product/wishlist.html',{'user_wishlist':user_wishlist,}) 
+def remove_wishlist_item(request,product_id):
+    
+    if Wishlist.objects.filter(userid=request.user.id,productid=request.product_id):
+        Wishlist.objects.filter(userid=request.user.id,productid=request.product_id).delete()
+    user_wishlist=Wishlist.objects.filter(userid=request.user.id)
+
+    
+    return render(request,'shop/product/wishlist.html',{'user_wishlist':user_wishlist,}) 
+def post_search(request):
+    form=SearchForm()
+    if query in request.GET:
+        form=SearchForm(request.GET)
+        if form.is_valid():
+            cd=form.cleaned_data
+            results=SearchQuerySet().models(Product).filter(content=cd['query']).load_all()
+            total_results=results.count()
+    return render(request,
                     'shop/templates/search/search.html',
                     {'form':form,
                     'cd':cd,
                     'results':results,
                     'total_Results':total_results})
+
+
+
+
 

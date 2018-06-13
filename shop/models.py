@@ -98,6 +98,9 @@ class Product(models.Model):
         self.slug=slugify(self.name)
         super(Product,self).save(*args,**kwargs)
 
+    def getimage(self):
+        return Image.objects.filter(main_image=True).get(product_id=self)
+        
 def get_image_filename(instance,filename):
     title=instance.product.name
     slug=slugify(title)
@@ -111,6 +114,8 @@ class Image(models.Model):
 
     def get_absolute_url(self):
         return "{0}".format(self.image.url)
+    
+    
 
 class WishManager(models.Manager):
     def create_wish(self,user,product):
@@ -125,3 +130,6 @@ class Wishlist(models.Model):
     objects=WishManager()
     def get_absolute_url(self):
         return self.product.url
+
+    def getproduct(self):
+        return Product.objects.get(productid=self)

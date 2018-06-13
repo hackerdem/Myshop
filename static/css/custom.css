@@ -590,7 +590,9 @@ header#header.header-fixed {
 	-webkit-transition: all 0.4s ease 0s;
 	-o-transition: all 0.4s ease 0s;
 }
-
+.header-right-link ul li.wishlist-icon > a span {
+	background-position: -12px -163px;
+}
 .header-right-link ul li.search-box > a span {
 	background-position: -12px -123px;
 }

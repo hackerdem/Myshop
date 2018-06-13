@@ -33,11 +33,11 @@ def get_filter_features(context):
     return {'features':features}
 
 @register.inclusion_tag('product_list_filtered.html',takes_context=True)
-def imply_filter_to_products(context):
-    products=Product.objects.all()
-    pro=context['products']
-    print(pro)
+def imply_filter_to_products(context,products):
+    
+  
 
     
     
     return {'products':products}
+

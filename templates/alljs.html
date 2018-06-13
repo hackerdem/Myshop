@@ -15,11 +15,20 @@
         window.location.href =param;
       }
   </script>
+  
   <script>
       $(document).ready(function(){
       {% block domready %}
       {% endblock %}
       });
+      </script>
+      <script>
+        function changePerPage(){
+          var selectvalue = $("#selectPageNumber").val();
+      
+        }
+
+
       </script>
       <script>
           function changeListingStyle(option){
@@ -70,6 +79,7 @@ $.ajax({
   data:{csrfmiddlewaretoken:'{{ csrf_token }}','product_id':productId},
   success: function() {
     $('#cartSize').load(' #cartSize');
+    $('#dropdowncart').load(' #dropdowncart');
   }
   
   //success:window.alert('r')

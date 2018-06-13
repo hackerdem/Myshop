@@ -66,10 +66,12 @@
               <div class="col-md-6">
                 <div class="show-item right-side float-left-sm"> <span>Show</span>
                   <div class="select-item">
-                    <select>
-                      <option value="" selected="selected">24</option>
-                      <option value="">12</option>
-                      <option value="">6</option>
+                    <select id='selectPageNumber' onchange="changePerPage()">
+                      <option value="48">48</option>
+                      <option value="24">24</option>
+                      <option value="16">16</option>
+                      <option value="12">12</option>
+                      <option selected="selected" value="8">8</option>
                     </select>
                   </div>
                   <span>Per Page</span>
@@ -78,7 +80,7 @@
               </div>
             </div>
           </div>
-          {% imply_filter_to_products %}
+          {% imply_filter_to_products products  %}
 
         </div>
       </div>

@@ -39,9 +39,10 @@
                     <tbody>
                         {% for item in cart %}
                             {% with product=item.product %}
+                            {% with image=product.getimage %}
                       <tr>
                         <td><a href="{{ product.get_absolute_url }}">
-                          <div class="product-image"><img alt="Empire" src="{% if product.image %}{{ product.image.url}}{% else %}{% static "image/no_image.png" %}{% endif %}"></div>
+                          <div class="product-image"><img alt="Empire" src="{% if image %}{{ image.image.url}}{% else %}{% static "image/no_image.png" %}{% endif %}"></div>
                           </a></td>
                         <td><div class="product-title"> <a href="product-page.html">{{ product.name }}</a> </div></td>
                         <td><ul>
@@ -67,8 +68,16 @@
                           </td>
                           {% endif %}
                         <td><div class="total-price price-box"> <span class="price">${{ item.total_price }}</span> </div></td>
-                        <td><a href="{% url "cart:cart_remove" product.id %}" title="Remove Item From Cart"  class="btn btn-danger btn-xs"> <span class="glyphicon glyphicon-remove"></span></td>
+                        <td>
+                            <div class="btn-group">
+                            <a type="button" class="btn-success btn-sm">Add</a>
+                            <a type="button" class="btn-danger btn-sm">Remove</a>
+                            </div>
+                          <!--<a href={% url "shop:remove_wishlist_item" '1' %} title="Remove Item From Cart"  class="btn btn-danger btn-xs"> <span class="glyphicon glyphicon-remove"></span></td>
+                          -->
+                        </td>
                       </tr>
+                      {% endwith %}
                       {% endwith %}
                       {% endfor %}
                     </tbody>
