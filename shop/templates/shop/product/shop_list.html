@@ -52,13 +52,13 @@
                 </div>
                 <div class="short-by float-right-sm"> <span>Sort By</span>
                   <div class="select-item">
-                    <select>
-                      <option value="1" selected="selected">Name (A to Z)</option>
-                      <option value="2">Name(Z - A)</option>
-                      <option value="3">price(low&gt;high)</option>
-                      <option value="4">price(high &gt; low)</option>
-                      <option value="5">rating(highest)</option>
-                      <option value="6">rating(lowest)</option>
+                    <select id='listingoptions' onchange="changeListing()">
+                      <option value="0" selected="selected">Name (A to Z)</option>
+                      <option value="1">Name(Z - A)</option>
+                      <option value="2">price(low&gt;high)</option>
+                      <option value="3">price(high &gt; low)</option>
+                      <option value="4">rating(highest)</option>
+                      <option value="5">rating(lowest)</option>
                     </select>
                   </div>
                 </div>
@@ -80,8 +80,9 @@
               </div>
             </div>
           </div>
+          <div id='shoplistproducts'>
           {% imply_filter_to_products products  %}
-
+        </div>
         </div>
       </div>
     </div>

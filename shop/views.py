@@ -5,11 +5,11 @@ from django.http import HttpResponse,HttpResponseRedirect,JsonResponse
 from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
 from cart.cart import Cart 
 from django.views.decorators.http import require_POST
-from django.template import RequestContext
+from django.template import RequestContext,Context
 from .forms import ProductAddWishlistForm,SearchForm
-
-
-
+import json
+from .filters import ProductFilter
+from .forms import FilterForm
 #404 error handling
 ###########################
 def handler404(request, exception, template_name='404.html'):
@@ -37,7 +37,24 @@ def product_liked(request):
         return JsonResponse({'status':'ko'})
 
 
+
 def product_list(request,**kwargs):
+    form=FilterForm()
+    if request.is_ajax:
+        if request.GET.get('selectvalue'):
+            request.session['product_per_page']=request.GET.get('selectvalue')
+        elif request.GET.get('listingvalue'):
+            filter_options=['-name','name','-price','price','-number_of_click','number_of_click']
+
+            filter_parameter=filter_options[int(request.GET.get('listingvalue'))]
+            print(request.GET.get('listingvalue'),filter_parameter)
+    
+    if 'product_per_page' not in request.session.keys():
+        product_per_page=8
+        print('yoh',request.session.keys())   
+ 
+    
+  
     filter_parameter='-stock'
     page='shop/product/list.html'
     if len(kwargs)==1:
@@ -58,29 +75,29 @@ def product_list(request,**kwargs):
             page='shop/product/shop_list.html'
     
         products=Product.objects.filter(available=True).order_by(filter_parameter)
-    products,paginator,features=pagination(request,products)
-    return render(request,page,
-                        {'products':products,
-                        'paginator':paginator,
-                        'features':features,
-                        })
-
-def pagination(request,products,product_per_page=8):
+    products,paginator=pagination(request,products,product_per_page)
     colors=Color.objects.all()
     sizes=Size.objects.all()
     rooms=Room.objects.all()
     category=Category.objects.all()
+    features={'color':colors,'room':rooms,'size':sizes,'category':category}
+    return render(request,page,
+                        {'products':products,
+                        'paginator':paginator,
+                        'features':features,
+                        'form':form,
+                        })
+
+def pagination(request,products,product_per_page):
     paginator=Paginator(products,product_per_page)
     page=request.GET.get('page')
-    features={'color':colors,'room':rooms,'size':sizes,'category':category}
-    filters=None
     try:
         products=paginator.page(page)
     except PageNotAnInteger:
         products=paginator.page(1)
     except EmptyPage: 
         products=paginator.page(paginator.num_pages)
-    return products,paginator,features
+    return products,paginator
 
 
     
@@ -112,15 +129,30 @@ def add_to_wishlist(request,product_id):
         return HttpResponse(status=204) #processed but returning content is unnecessary
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
+def wishlist_add_ajax(request):
+    product_id=request.POST.get('product_id',None)
+    if request.user.is_authenticated:
+        existing_object=Wishlist.objects.filter(userid=request.user.id,productid=product_id)
+        if not existing_object :
+            new_wishlist_object=Wishlist()
+
+            new_wishlist_object.save()
+            new_wishlist_object.userid.add(request.user)
+            new_wishlist_object.productid.add(product_id)
+
+        else:
+            existing_object.delete()
+    return HttpResponse(status=204)
+
+def carttotal(request):
+    cart=Cart(request)
+   
+    return cart
 
 def show_wishlist(request):
     
     user_wishlist=Wishlist.objects.filter(userid=request.user.id)
-    #products=Product.objects.filter(productid__in=)
-    for i in user_wishlist:
-        
-        print(i.getproduct())
-        
+    #products=Product.objects.filter(productid__in=) 
     return render(request,'shop/product/wishlist.html',{'user_wishlist':user_wishlist,}) 
 def remove_wishlist_item(request,product_id):
     

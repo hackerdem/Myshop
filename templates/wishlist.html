@@ -1,0 +1,53 @@
+
+   
+    <a href="{% url "shop:show_wishlist" %}">
+            <span class="pro-wishlist-icon">
+          <small  >
+            <div id='wishlistSize'>
+            {% if wishlist|length == 0 %}{{':('}}{% else %}{{ wishlist|length }}{% endif %}
+          </div>
+        </small>
+        
+        </span>
+      </a>
+      <div id='dropdownwishlist' class="header-link-dropdown cart-dropdown">
+        <ul class="cart-list link-dropdown-list">
+          {% if wislist|length > 0 %}
+            {% for item in wishlist %}
+            {% with product=item.product %}
+            {% with image=product.getimage %}
+            
+          <li>
+            <a class="close-cart">
+              
+              <i class="fa fa-times-circle"></i>
+            </a>
+            <div class="media">
+              <a class="pull-left">
+                <img alt="Empire" src="{{ image.image.url }}">
+              </a>
+              <div class="media-body">
+                <span>
+                  <a> {{ product.name|truncatechars:15 }}</a>
+                </span>
+                <p class="cart-price">${{ product.price }}</p>
+                <div class="product-qty">
+                  <label>Qty:</label>
+                  <div class="custom-qty">
+                    <input type="text" name="qty" maxlength="8" value="1" title="Qty" class="input-text qty">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
+          {% endwith %}
+          {% endwith %}
+      {% endfor %}
+        </ul>
+      
+      {% else %}
+      <li> <span>Your shopping cart is empty.</span></li>
+      {% endif %}
+        
+      </div>
+    

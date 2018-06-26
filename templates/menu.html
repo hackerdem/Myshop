@@ -67,11 +67,9 @@
                 </div>
               </li>
               <li>
-                <a href="{% url "shop:show_wishlist" %}">
-                  <span class="fa fa-heart">
-                    
-                  </span>
-                </a>
+                  {% show_wishlist %}
+                
+                
               </li>
               <li id='cartInfo' class="cart-icon">
               {% show_cart %}

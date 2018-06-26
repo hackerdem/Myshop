@@ -28,7 +28,13 @@
                 
               </li>
               
-              <li class="pro-wishlist-icon"><a href="#"><span></span></a></li>
+              <li class="pro-wishlist-icon">
+                  <form id='{{product.name}}' action="{% url "shop:add_to_wishlist" product.id %}" method="post">
+                      {% csrf_token %}
+                      <button href="javascript:{}" onclick="addToWishlist('{{product.id}}')" title="Add to Cart"><span></span></button>
+                    </form>
+
+              </li>
               <li class="pro-compare-icon"><a href="#"><span></span></a></li>
             </ul>
           </div>

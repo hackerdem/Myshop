@@ -23,12 +23,38 @@
       });
       </script>
       <script>
+        function changeListing(){
+          var listingvalue = $("#listingoptions").val();
+          $.ajax({
+            type:"GET",
+            url:'{% url "shop:product_list" %}',
+            data:{'listingvalue':listingvalue},
+            success: function() {
+              
+              location.reload();
+            }
+      
+        })
+      }
+
+      </script>
+      <script>
         function changePerPage(){
           var selectvalue = $("#selectPageNumber").val();
-      
-        }
+          
+          $.ajax({
+            type:"GET",
+            url:'{% url "shop:product_list" %}',
+            data:{'selectvalue':selectvalue},
+            success: function() {
+              
+              location.reload();
+              
+              
+            },
+        })
 
-
+      }
       </script>
       <script>
           function changeListingStyle(option){
@@ -50,7 +76,9 @@
     
         function filterProducts(form){
           //document.getElementById(productName).submit();
-          var form=JSON.stringify($('form').serializeArray())         
+          var min = $("#slider-range").slider();
+          var form=JSON.stringify($('form').serializeArray())
+          window.alert(form)     
           
           
     $.ajax({
@@ -58,7 +86,7 @@
       url:'{% url "cart:product_custom_filter" %}',
       data:{form:form,csrfmiddlewaretoken:'{{ csrf_token }}'},
       success: function() {
-         
+        
       }
      
       //success:window.alert('r')
@@ -80,6 +108,27 @@ $.ajax({
   success: function() {
     $('#cartSize').load(' #cartSize');
     $('#dropdowncart').load(' #dropdowncart');
+  }
+  
+  //success:window.alert('r')
+})
+
+     }
+    
+  </script>
+  <script>
+    
+    function addToWishlist(productId){
+      //document.getElementById(productName).submit();
+  
+      
+$.ajax({
+  type:"POST",
+  url:'{% url "shop:wishlist_add_ajax" %}',
+  data:{csrfmiddlewaretoken:'{{ csrf_token }}','product_id':productId},
+  success: function() {
+    $('#wishlistSize').load(' #wishlistSize');
+    $('#dropdownwishlist').load(' #dropdownwishlist');
   }
   
   //success:window.alert('r')

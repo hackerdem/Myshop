@@ -133,3 +133,6 @@ class Wishlist(models.Model):
 
     def getproduct(self):
         return Product.objects.get(productid=self)
+
+    def __len__(self):
+        return Wishlist.objects.count()

@@ -1,7 +1,7 @@
 from django import template
 from shop.models import Color,Size,Room,Category,Image,Product
 register=template.Library()
-
+from shop.views import pagination
 
 @register.inclusion_tag('menu.html',takes_context=True)
 def show_menu(context):
@@ -34,10 +34,5 @@ def get_filter_features(context):
 
 @register.inclusion_tag('product_list_filtered.html',takes_context=True)
 def imply_filter_to_products(context,products):
-    
-  
-
-    
-    
     return {'products':products}
 

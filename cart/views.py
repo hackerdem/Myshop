@@ -14,7 +14,6 @@ def cart_add(request,product_id):
     cart=Cart(request)
     product=get_object_or_404(Product,id=product_id)
     product.image=Image.objects.filter(product=product).filter(main_image=True)
-    print(product.image)
     form=CartAddProductForm(request.POST)
     if form.is_valid():
         cd=form.cleaned_data
@@ -48,17 +47,14 @@ def cart_add_ajax(request):
 
 def carttotal(request):
     cart=Cart(request)
-    print(cart)
+   
     return cart
 
 def product_custom_filter(request):
     #request_csrf_token = request.POST.get('csrfmiddlewaretoken', '')
     request_getdata = request.POST.get('form', None) 
-    context=RequestContext(request)
     
-    context['filters']="{'blue':'on'}"
-    for i in json.loads(request_getdata):
-        if i['value']=='on':print(i['name'])
+    """for i in json.loads(request_getdata):
+        if i['value']!='' and i['name']!='csrfmiddlewaretoken':print(i['name'])"""
     #filtered_products=Product.objects.filter(product=product).filter(color='blue')
-    print('filtered_products')   
     return HttpResponse('ok')
