@@ -7,10 +7,20 @@
 <section class="ptb-95">
     <div class="container">
       <div class="row">
+          
         <div class="col-lg-2 col-md-3 col-sm-4 mb-sm-30 sidebar-col">
-        
+            
+   
+              <form id='filterForm' action="{% url 'shop:filtered_product_listing' %}" method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+      
+                <a class="btn btn-color" href='#' onclick="document.getElementById('filterForm').submit()">Refine</a>
+              </form>
+            
+            
 <div class="sidebar-block">
-  {% get_filter_features %}
+  
   <div class="sidebar-box sidebar-item"> <span class="opener plus"></span>
               <div class="sidebar-title">
                 <h3>Best Seller</h3> <span></span>

@@ -1,32 +1,24 @@
 from django import forms
-from .views import Wishlist, Product, Color, Size, Category
+from .views import Wishlist, Product, Color, Size, Category,Room
 from django.utils.encoding import force_text
 from django.utils.safestring import mark_safe
 from django.utils.html import format_html
-#PRODUCT_QUANTITY_CHOICES=[(i,str(i)) for i in range(1,21)]
 
-class FeatureGroupSelect(forms.widgets.Select):
-    def render_option(self, selected_choices, option_value, option_label):
-        option_value = force_text(option_value)
-        if option_value in selected_choices:
-            selected_html = mark_safe(' selected="selected"')
-            if not self.allow_multiple_selected:
-                selected_choices.remove(option_value)
-        else:
-            selected_html = ''
-        class_attr = ''
-        return format_html('<option value="{0}"{1} class="{3}">{2}</option>',
-        option_value,
-        selected_html,
-        force_text(option_label),
-        class_attr)
-class FeatureModelChoicesField(forms.ModelChoiceField):
-    def __init__(self, *args, **kwargs):
-        kwargs['widget'] = FeatureGroupSelect
-        super(FeatureModelChoicesField,self).__init__( *args, **kwargs)
+
 
 class FilterForm(forms.Form):
-    categorygroup_id = FeatureModelChoicesField(queryset = Category.objects.all())
+    def feature_choices(class_name):
+        return [(i.name.capitalize(),i.name.capitalize()) for i in class_name.objects.all()]
+    CHOICES = (('1', 'A'), ('2', 'B'), ('3', 'C'))
+    PRICE_CHOICES=[('0-100','0-100$'),('100-200','100-200$'),('200-300','200-300$'),('300-400','300-400'),('400-10000','400+')]
+    print(Category.objects.all())
+    category = forms.MultipleChoiceField(required=False,widget = forms.CheckboxSelectMultiple(),choices= feature_choices(Category))
+    color = forms.MultipleChoiceField(required=False,widget = forms.CheckboxSelectMultiple(),choices= feature_choices(Color))
+    size = forms.MultipleChoiceField(required=False,widget = forms.CheckboxSelectMultiple(),choices= feature_choices(Size))
+    room = forms.MultipleChoiceField(required=False,widget = forms.CheckboxSelectMultiple(),choices= feature_choices(Room))
+    price = forms.MultipleChoiceField(required=False,widget = forms.CheckboxSelectMultiple(),choices=PRICE_CHOICES)
+    
+    
 class ProductAddWishlistForm(forms.Form):
     class Meta:
         model=Wishlist

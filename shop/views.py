@@ -10,6 +10,7 @@ from .forms import ProductAddWishlistForm,SearchForm
 import json
 from .filters import ProductFilter
 from .forms import FilterForm
+import re
 #404 error handling
 ###########################
 def handler404(request, exception, template_name='404.html'):
@@ -35,11 +36,41 @@ def product_liked(request):
             except:
                 pass
         return JsonResponse({'status':'ko'})
+def extract_features():
+    colors=Color.objects.all()
+    sizes=Size.objects.all()
+    rooms=Room.objects.all()
+    category=Category.objects.all()
+    return {'color':colors,'room':rooms,'size':sizes,'category':category}
+def filtered_product_listing(request):
+    if request.method=="POST":
+        form=FilterForm(request.POST)
+        if form.is_valid():
+            data=form.cleaned_data
+            print(data)
+            filter={}
+            for i,v in data.items():
+                if not len(v)==0 and i!='price':
+                    filter['{}__in'.format(i)]=v
+                if not len(v)==0 and i=='price':
+                    price_limits=re.findall(r'\d+',v[0])
+                    filter['{}__gte'.format(i)]=price_limits[0]
+                    filter['{}__lte'.format(i)]=price_limits[1]
+            
+            products=Product.objects.filter(**filter)
+            page='shop/product/shop_list.html'
+            if 'product_per_page' not in request.session.keys():
+                product_per_page=8
+            print('products:',products)
+            products,paginator=pagination(request,products,product_per_page)
+            return render(request,page,
+                        {'products':products,
+                        'paginator':paginator,
+                        'features':extract_features(),
+                        'form':form,
+                        })
 
-
-
-def product_list(request,**kwargs):
-    form=FilterForm()
+def product_list(request,**kwargs):                
     if request.is_ajax:
         if request.GET.get('selectvalue'):
             request.session['product_per_page']=request.GET.get('selectvalue')
@@ -54,7 +85,7 @@ def product_list(request,**kwargs):
         print('yoh',request.session.keys())   
  
     
-  
+    form=FilterForm()
     filter_parameter='-stock'
     page='shop/product/list.html'
     if len(kwargs)==1:
@@ -76,15 +107,10 @@ def product_list(request,**kwargs):
     
         products=Product.objects.filter(available=True).order_by(filter_parameter)
     products,paginator=pagination(request,products,product_per_page)
-    colors=Color.objects.all()
-    sizes=Size.objects.all()
-    rooms=Room.objects.all()
-    category=Category.objects.all()
-    features={'color':colors,'room':rooms,'size':sizes,'category':category}
     return render(request,page,
                         {'products':products,
                         'paginator':paginator,
-                        'features':features,
+                        'features':extract_features(),
                         'form':form,
                         })
 
