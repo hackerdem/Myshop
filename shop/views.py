@@ -47,7 +47,6 @@ def filtered_product_listing(request):
         form=FilterForm(request.POST)
         if form.is_valid():
             data=form.cleaned_data
-            print(data)
             filter={}
             for i,v in data.items():
                 if not len(v)==0 and i!='price':
@@ -63,49 +62,67 @@ def filtered_product_listing(request):
                 product_per_page=8
             print('products:',products)
             products,paginator=pagination(request,products,product_per_page)
-            return render(request,page,
+        
+        else:
+            form=FilterForm()
+        return render(request,page,
                         {'products':products,
                         'paginator':paginator,
                         'features':extract_features(),
                         'form':form,
                         })
 
-def product_list(request,**kwargs):                
+def product_list(request,**kwargs):
+    filter_parameter='-stock' 
+    ajax_filter_parameter=None
+    products=Product.objects.filter(available=True)               
     if request.is_ajax:
+        print('ajax')
         if request.GET.get('selectvalue'):
             request.session['product_per_page']=request.GET.get('selectvalue')
         elif request.GET.get('listingvalue'):
             filter_options=['-name','name','-price','price','-number_of_click','number_of_click']
 
-            filter_parameter=filter_options[int(request.GET.get('listingvalue'))]
+            ajax_filter_parameter=filter_options[int(request.GET.get('listingvalue'))]
             print(request.GET.get('listingvalue'),filter_parameter)
     
     if 'product_per_page' not in request.session.keys():
         product_per_page=8
-        print('yoh',request.session.keys())   
+    else:
+        product_per_page=request.session['product_per_page']
+           
  
     
     form=FilterForm()
-    filter_parameter='-stock'
     page='shop/product/list.html'
     if len(kwargs)==1:
+        print('1')
         filter_parameter='{}'.format(kwargs['slug'])
 
     elif len(kwargs)>1:
+        print('2')
         name=kwargs['name']
         slug=kwargs['slug']
         products=Product.objects.filter(**{slug:name.capitalize()}).order_by(filter_parameter)
+    
     else:
+        print('3')
         if request.path=='/shop/most_viewed/':
+            print('3a')
             filter_parameter='number_of_click'
         elif request.path=='/shop/latest/':
+            print('3b')
             filter_parameter='-created'
         elif request.path=='/shop/all/':
+            print('3c')
             filter_parameter='-stock'
         elif request.path=='/shop/shop_list/':
+            print('3d')
             page='shop/product/shop_list.html'
+            filter_parameter='-stock' if ajax_filter_parameter==None else ajax_filter_parameter
     
         products=Product.objects.filter(available=True).order_by(filter_parameter)
+    print(filter_parameter,ajax_filter_parameter)
     products,paginator=pagination(request,products,product_per_page)
     return render(request,page,
                         {'products':products,

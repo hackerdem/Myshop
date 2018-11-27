@@ -1,8 +1,8 @@
 
    
     <a href="{% url "shop:show_wishlist" %}">
-            <span class="pro-wishlist-icon">
-          <small  >
+      <span>
+          <small>
             <div id='wishlistSize'>
             {% if wishlist|length == 0 %}{{':('}}{% else %}{{ wishlist|length }}{% endif %}
           </div>

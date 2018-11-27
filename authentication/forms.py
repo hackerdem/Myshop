@@ -35,7 +35,7 @@ class UserRegistrationForm(forms.ModelForm):
 class UserChangeForm(forms.ModelForm):
     password=ReadOnlyPasswordHashField()
     class Meta:
-        mudel=User
+        model=User
         fields=('email','first_name','password',)
     def clean_password(self):
         return self.initial["password"]

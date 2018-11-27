@@ -22,3 +22,4 @@ class UserRegistrationForm(forms.ModelForm):
             raise forms.ValidationError('Password should be at least 8 characters and consist of numbers,upper and lower case characters.')
         return cd['password2']
 
+    
